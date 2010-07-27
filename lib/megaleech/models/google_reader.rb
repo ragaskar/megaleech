@@ -19,6 +19,7 @@ class Megaleech
 
     def sid
       get_sid if @sid.nil?
+      p @sid
       @sid
     end
 
@@ -30,9 +31,12 @@ class Megaleech
       connection = Net::HTTP.new(url.host, url.port)
       until results.length > count
         header = {'Cookie' => "Name=SID;SID=#{sid};Domain=.google.com;Path=/;Expires=160000000000"}
+        p header
         c_string = continuation.empty? ? '' : "?c=#{continuation}"
+        p url.path
         response = connection.get(url.path + c_string, header)
         doc = Nokogiri::XML(response.body)
+        p response
         if entries = doc.xpath("//xmlns:entry")
           entries.each do |entry|
             results << FeedEntry.new(entry)
@@ -66,7 +70,6 @@ class Megaleech
       connection.use_ssl = true
       response = connection.post(url.path, GoogleReader.to_query_string(data))
       data = CGI.parse(response.body)
-
       raise Exception.new(data['Error'].first) if !data['Error'].empty?
       @sid = data['SID'].first
     end

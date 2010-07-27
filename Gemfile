@@ -9,6 +9,7 @@ gem "nokogiri", "1.4.2"
 gem "bencode", "0.6.0"
 gem "sequel", "3.13.0"
 gem "sqlite3-ruby", "1.3.1"
+gem "daemons", "1.1.0"
 
 group :test do
   gem "rspec", "1.3.0"

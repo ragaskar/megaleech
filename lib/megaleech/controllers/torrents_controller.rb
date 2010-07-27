@@ -7,7 +7,7 @@ class Megaleech
     end
 
     def run
-      starred = google_reader.starred(10)
+      starred = google_reader.starred
       starred.each { |s| process_entry(s) }
     end
 
@@ -45,6 +45,8 @@ class Megaleech
     end
 
     def google_reader
+      p config.user
+      p config.password
       @google_reader ||= Megaleech::GoogleReader.new(config.user, config.password)
     end
 
@@ -54,7 +56,8 @@ class Megaleech
 
     def config_path
       #ENV['HOME']/.megaleech.rc OR
-      File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', '.megaleech.rc'))
+      File.expand_path("./.megaleech.rc")
+#      File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', '.megaleech.rc'))
     end
 
   end
