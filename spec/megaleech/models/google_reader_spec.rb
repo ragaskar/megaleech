@@ -3,26 +3,9 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'spec_hel
 
 describe Megaleech::GoogleReader do
   before do
-    @sid = 'some_sid'
+    @auth = 'some_auth'
     @user = 'some_user'
     @password = 'some_pass'
-  end
-
-  it 'should login to Google and get a session id when sid is requested' do
-    sid = mock_google_reader_login(@user, @password)
-
-    reader = Megaleech::GoogleReader.new(@user, @password)
-    reader.sid.should == sid
-  end
-
-  it 'should re-raise errors' do
-    fake_http = mock(Net::HTTP)
-    fake_http.should_receive(:use_ssl=)
-    fake_response = mock('response', :body=>'Error=foo')
-    fake_http.should_receive(:post).and_return(fake_response)
-    Net::HTTP.stub(:new => fake_http)
-
-    lambda { Megaleech::GoogleReader.new(@user, @password).sid }.should raise_error('foo')
   end
 
   describe 'starred' do
@@ -32,9 +15,9 @@ describe Megaleech::GoogleReader do
     end
 
     it 'should be able to retrieve starred items' do
-      mock_google_reader_starred(@sid, @sample_starred_response)
+      mock_google_reader_starred(@auth, @sample_starred_response)
       reader = Megaleech::GoogleReader.new(@user, @password)
-      reader.stub!(:sid => @sid)
+      reader.stub!(:auth => @auth)
       starred = reader.starred
       starred.length.should == 2
       starred.collect { |entry| entry.title }.should ==
@@ -47,16 +30,16 @@ describe Megaleech::GoogleReader do
       fake_response = mock('response', :body=> @sample_starred_response)
       fake_http.should_receive(:get).with(
         "/reader/atom/user/-/state/com.google/starred",
-        {"Cookie"=>"Name=SID;SID=#{@sid};Domain=.google.com;Path=/;Expires=160000000000"}
+         {"Authorization"=>"GoogleLogin auth=some_auth"}
       ).and_return(fake_response)
       fake_http.should_receive(:get).with(
         "/reader/atom/user/-/state/com.google/starred?c=CKy72pDxzZsC",
-        {"Cookie"=>"Name=SID;SID=#{@sid};Domain=.google.com;Path=/;Expires=160000000000"}
+         {"Authorization"=>"GoogleLogin auth=some_auth"}
       ).at_least(4).times.and_return(fake_response)
       Net::HTTP.stub(:new => fake_http)
 
       reader = Megaleech::GoogleReader.new(@user, @password)
-      reader.stub!(:sid => @sid)
+      reader.stub!(:auth => @auth)
       results = reader.starred(10)
       results.length.should == 12
     end
@@ -74,7 +57,7 @@ describe Megaleech::GoogleReader do
       Net::HTTP.stub(:new => fake_http)
 
       reader = Megaleech::GoogleReader.new(@user, @password)
-      reader.stub!(:sid => @sid)
+      reader.stub!(:auth => @auth)
       results = reader.starred(10)
       results.length.should == 6
     end

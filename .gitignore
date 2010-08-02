@@ -1,3 +1,6 @@
 .idea
 .bundle
-.megaleech.rc
+.megaleech
+pkg
+megaleech.db
+junk.*

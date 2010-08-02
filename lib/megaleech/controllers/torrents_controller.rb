@@ -2,8 +2,10 @@ class Megaleech
   class TorrentsController
     require "sequel"
 
-    def initialize
+    def initialize(path = nil)
       @classes = {}
+      path ||= File.join(FileUtils.pwd, ".megaleech")
+      @megaleech_path = path
     end
 
     def run
@@ -15,7 +17,7 @@ class Megaleech
 
     def entries
       return @entries if @entries
-      db = Sequel.sqlite(config.database_file)
+      db = Sequel.sqlite(db_path)
       unless db.table_exists?(:entries)
         db.create_table :entries do
           primary_key :id
@@ -26,12 +28,20 @@ class Megaleech
     end
 
     def process_entry(feed_entry)
-      return if entries.filter(:feed_id => feed_entry.id).count > 0
-      return unless klass = source_processor_class(feed_entry.source)
-      processor = klass.new(feed_entry, config.torrent_file_download_directory, config.torrent_download_directory)
-      torrent_filepath = processor.download_torrent_file
-      rtorrent.download_torrent(torrent_filepath, processor.destination)
-      entries.insert(:feed_id => feed_entry.id)
+      begin
+        return if entries.filter(:feed_id => feed_entry.id).count > 0
+        return unless klass = source_processor_class(feed_entry.source)
+        processor = klass.new(feed_entry, megaleech_path, config.torrent_download_directory)
+        torrent_filepath = processor.download_torrent_file
+        rtorrent.download_torrent(torrent_filepath, processor.destination)
+        entries.insert(:feed_id => feed_entry.id)
+      rescue StandardError => e
+        File.open(log_path, "a") { |f|
+          f.write("Failed to process #{feed_entry.title}\n")
+          f.write("#{e.message}\n")
+          f.write("#{e.backtrace.join("\n")}\n\n")
+        }
+      end
     end
 
     def source_processor_class(source)
@@ -45,8 +55,6 @@ class Megaleech
     end
 
     def google_reader
-      p config.user
-      p config.password
       @google_reader ||= Megaleech::GoogleReader.new(config.user, config.password)
     end
 
@@ -54,10 +62,20 @@ class Megaleech
       @config ||= Megaleech::Config.new(config_path)
     end
 
+    def log_path
+      File.join(megaleech_path, "megaleech.log")
+    end
+
+    def db_path
+      File.join(megaleech_path, "megaleech.db")
+    end
+
+    def megaleech_path
+      @megaleech_path
+    end
+
     def config_path
-      #ENV['HOME']/.megaleech.rc OR
-      File.expand_path("./.megaleech.rc")
-#      File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', '.megaleech.rc'))
+      File.join(megaleech_path, ".megaleech.rc")
     end
 
   end

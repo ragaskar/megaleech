@@ -14,13 +14,7 @@ class Megaleech
     def initialize(user, password)
       @user = user
       @password = password
-      @sid = nil
-    end
-
-    def sid
-      get_sid if @sid.nil?
-      p @sid
-      @sid
+      @auth = nil
     end
 
     def starred(count = 0)
@@ -30,13 +24,10 @@ class Megaleech
                              :path => "/reader/atom/user/-/state/com.google/starred"})
       connection = Net::HTTP.new(url.host, url.port)
       until results.length > count
-        header = {'Cookie' => "Name=SID;SID=#{sid};Domain=.google.com;Path=/;Expires=160000000000"}
-        p header
+        header = {"Authorization" => "GoogleLogin auth=#{auth}"}
         c_string = continuation.empty? ? '' : "?c=#{continuation}"
-        p url.path
         response = connection.get(url.path + c_string, header)
         doc = Nokogiri::XML(response.body)
-        p response
         if entries = doc.xpath("//xmlns:entry")
           entries.each do |entry|
             results << FeedEntry.new(entry)
@@ -58,20 +49,29 @@ class Megaleech
 
     private
 
-    def get_sid
+    def auth
+      return @auth unless @auth.nil?
       data = {'Email' => @user,
               'Passwd' => @password,
               'service' => 'reader',
-              'continue' => GoogleReader::GOOGLE_URL
+              "source" => "Megaleech"
       }
       url = URI::HTTPS.build({:host => "www.google.com",
                               :path => "/accounts/ClientLogin"})
       connection = Net::HTTP.new(url.host, url.port)
       connection.use_ssl = true
       response = connection.post(url.path, GoogleReader.to_query_string(data))
-      data = CGI.parse(response.body)
-      raise Exception.new(data['Error'].first) if !data['Error'].empty?
-      @sid = data['SID'].first
+      data = parse_auth_vars(response.body)
+      @auth = data['Auth']
     end
+
+    def parse_auth_vars(text)
+      text.split("\n").each.inject({}) do |data, pair|
+        key_and_value = pair.split("=")
+        data[key_and_value[0]] = key_and_value[1]
+        data
+      end
+    end
+
   end
 end

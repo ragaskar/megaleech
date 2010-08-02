@@ -12,35 +12,32 @@ class Megaleech
     def password
       config.params['google_reader']['password']
     end
-
+    
     def processor_class_name(source)
       config.params['torrent_processors'][source]
     end
 
     def torrent_file_download_directory
-      config.params['torrents']['download_torrent_file_path']
+      return_path_if_present(config.params['torrents']['download_torrent_file_path'])
     end
 
     def torrent_download_directory
-      config.params['torrents']['download_root_path']
+      return_path_if_present(config.params['torrents']['download_root_path'])
     end
 
     def rtorrent_socket
       config.params['rtorrent']['socket_path']
     end
 
-    def database_file
-      config.params['database']['database']
-    end
-
     def config
-      load_config if @config.nil?
-      @config
+      @config ||= ParseConfig.new(@path)
     end
 
-    def load_config
-      @config = ParseConfig.new(@path)
+    private
+    def return_path_if_present(path)
+      return path if File.exists?(path)
+      raise "Unable to find path from config: #{path}"
     end
-    
+
   end
 end

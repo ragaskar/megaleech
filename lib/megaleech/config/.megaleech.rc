@@ -1,3 +1,12 @@
 [google_reader]
 user = 'username'
 password = 'password'
+[torrents]
+download_torrent_file_path = "/tmp/.torrent"
+download_root_path = "/home/user/torrents"
+[rtorrent]
+socket_path = 'some_socket_path'
+[torrent_processors]
+TVTorrents.com = "TvTorrents"
+[database]
+database = "./megaleech.db"

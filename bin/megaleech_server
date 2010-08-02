@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+require 'daemons'
+require 'megaleech'
+
+megaleech_path = File.join(File.expand_path(ENV['HOME']), ".megaleech")
+FileUtils.mkdir_p(megaleech_path) unless File.exists?(megaleech_path)
+if (!File.exists?(File.join(megaleech_path, ".megaleech.rc")))
+  sample_config = File.expand_path(File.join(File.dirname(__FILE__), '..', '/lib/megaleech/config/.megaleech.rc'))
+  FileUtils.cp(sample_config, megaleech_path)
+end
+
+controller = Megaleech::TorrentsController.new(megaleech_path)
+Daemons.run_proc("megaleech") do
+  loop do
+    controller.run
+    sleep(300)
+  end
+end

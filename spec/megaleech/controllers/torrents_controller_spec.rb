@@ -3,11 +3,12 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'spec_hel
 describe Megaleech::TorrentsController do
 
   before do
-    path = lib_path('megaleech/config/.megaleech.rc')
-    mock_parseconfig(path)
+    File.stub(:exists?).and_return(true)
+    @megaleech_path = "/some/path/.megaleech"
+    mock_parseconfig("#{@megaleech_path}/.megaleech.rc")
     starred_response = fixture('sample_starred_no_continuation.xml')
     mock_google_reader('username', 'password', starred_response)
-    @controller = Megaleech::TorrentsController.new
+    @controller = Megaleech::TorrentsController.new(@megaleech_path)
     @rtorrent = Megaleech::Rtorrent.new("some_socket_path")
     mock_entries = mock("entries", :filter => mock("result", :count => 0))
     mock_entries.stub!(:insert)
@@ -22,8 +23,8 @@ describe Megaleech::TorrentsController do
   end
 
   it "#run should add new torrents to rtorrent with the correct path" do
-    @rtorrent.should_receive(:download_torrent).with("/tmp/.torrent/some_file.torrent", "/home/user/torrents/tv/Cops/Season 21/")
-    @rtorrent.should_receive(:download_torrent).with("/tmp/.torrent/some_file.torrent", "/home/user/torrents/tv/Miami Social/Season 1/")
+    @rtorrent.should_receive(:download_torrent).with("#{@megaleech_path}/some_file.torrent", "/home/user/torrents/tv/Cops/Season 21/")
+    @rtorrent.should_receive(:download_torrent).with("#{@megaleech_path}/some_file.torrent", "/home/user/torrents/tv/Miami Social/Season 1/")
     @controller.run
   end
 end

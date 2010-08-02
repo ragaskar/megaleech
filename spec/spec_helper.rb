@@ -15,19 +15,19 @@ def lib_path(filename)
 end
 
 def mock_google_reader(user, password, response)
-  sid = 'some-sid'
+  auth = 'some-auth'
   fake_http = mock(Net::HTTP)
-  MockHelpers.google_reader_login(user, password, sid, fake_http)
-  MockHelpers.google_reader_starred(sid, response, fake_http)
+  MockHelpers.google_reader_login(user, password, auth, fake_http)
+  MockHelpers.google_reader_starred(auth, response, fake_http)
   Net::HTTP.stub(:new => fake_http)
 end
 
 def mock_google_reader_login (user, password)
-  sid = 'some-sid'
+  auth = 'some-auth'
   fake_http = mock(Net::HTTP)
-  MockHelpers.google_reader_login(user, password, sid, fake_http)
+  MockHelpers.google_reader_login(user, password, auth, fake_http)
   Net::HTTP.stub(:new => fake_http)
-  sid
+  auth
 end
 
 def mock_google_reader_starred(sid, response)
@@ -53,23 +53,23 @@ end
 
 class MockHelpers
 
-  def self.google_reader_starred(sid, response, fake_http)
+  def self.google_reader_starred(auth, response, fake_http)
     fake_response = Spec::Mocks::Mock.new('response', :body=> response)
     fake_http.should_receive(:get) do |url, params|
       url.should =~ Regexp.new("/reader/atom/user/-/state/com.google/starred")
-      params['Cookie'].should =~ Regexp.new(sid)
+      params['Authorization'].should =~ Regexp.new(auth)
       fake_response
     end.at_least(:once)
   end
 
-  def self.google_reader_login(user, password, sid, fake_http)
+  def self.google_reader_login(user, password, auth, fake_http)
     fake_http.should_receive(:use_ssl=)
-    fake_response = Spec::Mocks::Mock.new('response', :body=>"SID=#{sid}")
+    fake_response = Spec::Mocks::Mock.new('response', :body=>"SID=some-string\nAuth=#{auth}")
     fake_http.should_receive(:post).with("/accounts/ClientLogin", Megaleech::GoogleReader.to_query_string(
       {'Email' => user,
        'Passwd' => password,
        'service' => 'reader',
-       'continue' => Megaleech::GoogleReader::GOOGLE_URL
+       "source" => "Megaleech"
       })).and_return(fake_response)
   end
 

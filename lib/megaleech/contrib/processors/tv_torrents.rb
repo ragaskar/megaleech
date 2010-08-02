@@ -12,7 +12,7 @@ class TvTorrents
   end
 
   def destination
-    "#{@torrent_download_path}/tv/#{show_name}/Season #{show_season}/"
+    File.join(@torrent_download_path, "tv/#{show_name}/Season #{show_season}/")
   end
 
   protected
@@ -27,7 +27,7 @@ class TvTorrents
 
   def download(source, save_path)
     file = agent.get(source)
-    destination = "#{save_path}/#{file.filename}"
+    destination = File.join(save_path, file.filename)
     file.save_as destination
     destination
   end
