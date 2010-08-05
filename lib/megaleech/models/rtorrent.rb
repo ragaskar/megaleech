@@ -1,4 +1,4 @@
-class Megaleech
+module Megaleech
   class Rtorrent
     require "bencode"
     require "digest/sha1"
@@ -8,6 +8,21 @@ class Megaleech
       @socket = socket
     end
 
+    def download_torrent(filepath, destination)
+      server.call("load", filepath)
+      data = BEncode.load_file(filepath)
+      info_hash = Digest::SHA1.hexdigest(data['info'].bencode)
+      FileUtils.mkdir_p(File.dirname(destination))
+      server.call("d.set_directory_base", info_hash, destination)
+      server.call("d.start", info_hash)
+      info_hash
+    end
+
+    def has_completed_downloading?(torrent)
+      server.call("download_list", "complete").include?(torrent.info_hash)
+    end
+
+    private
     def server
       get_server if @server.nil?
       @server
@@ -16,15 +31,6 @@ class Megaleech
     def get_server
       @server = SCGIXMLClient.new([@socket, "/RPC2"])
       @server
-    end
-
-    def download_torrent(filepath, destination)
-      server.call("load", filepath)
-      data = BEncode.load_file(filepath)
-      info_hash = Digest::SHA1.hexdigest(data['info'].bencode)
-      FileUtils.mkdir_p(File.dirname(destination))
-      server.call("d.set_directory_base", info_hash, destination)
-      server.call("d.start", info_hash)
     end
 
   end

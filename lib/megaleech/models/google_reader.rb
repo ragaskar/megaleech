@@ -1,4 +1,4 @@
-class Megaleech
+module Megaleech
   class GoogleReader
     require 'net/https'
     require 'net/http'

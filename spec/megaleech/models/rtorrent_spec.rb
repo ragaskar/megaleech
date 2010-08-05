@@ -21,4 +21,18 @@ describe Megaleech::Rtorrent do
       @rtorrent.download_torrent(torrent_file_path, destination)
     end
   end
+
+  describe "#completed_downloading" do
+    it "should return true if the passed torrent has completed downloading" do
+      torrent = queued_torrent
+      @server.should_receive(:call).with("download_list", "complete").and_return([torrent.info_hash])
+      @rtorrent.has_completed_downloading?(torrent).should == true
+      end
+
+    it "should return false if the passed torrent has completed downloading" do
+      torrent = queued_torrent
+      @server.should_receive(:call).with("download_list", "complete").and_return([])
+      @rtorrent.has_completed_downloading?(torrent).should == false
+    end
+  end
 end

@@ -1,5 +1,6 @@
 $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
 require 'rubygems'
+ENV["MEGALEECH_PATH"] = File.expand_path(File.join(File.dirname(__FILE__), "..", ".megaleech"))
 require "megaleech"
 
 def fixture(filename)
@@ -12,6 +13,10 @@ end
 
 def lib_path(filename)
   File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', filename))
+end
+
+def root_path(filename = nil)
+  File.expand_path(File.join(File.dirname(__FILE__), '..', filename))
 end
 
 def mock_google_reader(user, password, response)
@@ -46,6 +51,13 @@ def mock_rtorrent(path, server)
   Megaleech::Rtorrent.new(path)
 end
 
+def queued_torrent
+  Megaleech::Torrent.create(:feed_id => mock_entry.id,
+                            :status => Megaleech::Torrent::QUEUED,
+                            :location => "some location",
+                            :info_hash => "some hash")
+end
+
 def mock_entry
   doc =Nokogiri::XML(fixture('sample_starred.xml'))
   Megaleech::GoogleReader::FeedEntry.new(doc.at_xpath("//xmlns:entry"))
@@ -55,17 +67,17 @@ class MockHelpers
 
   def self.google_reader_starred(auth, response, fake_http)
     fake_response = Spec::Mocks::Mock.new('response', :body=> response)
-    fake_http.should_receive(:get) do |url, params|
+    fake_http.stub(:get) do |url, params|
       url.should =~ Regexp.new("/reader/atom/user/-/state/com.google/starred")
       params['Authorization'].should =~ Regexp.new(auth)
       fake_response
-    end.at_least(:once)
+    end
   end
 
   def self.google_reader_login(user, password, auth, fake_http)
-    fake_http.should_receive(:use_ssl=)
+    fake_http.stub(:use_ssl=)
     fake_response = Spec::Mocks::Mock.new('response', :body=>"SID=some-string\nAuth=#{auth}")
-    fake_http.should_receive(:post).with("/accounts/ClientLogin", Megaleech::GoogleReader.to_query_string(
+    fake_http.stub(:post).with("/accounts/ClientLogin", Megaleech::GoogleReader.to_query_string(
       {'Email' => user,
        'Passwd' => password,
        'service' => 'reader',

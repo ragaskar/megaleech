@@ -1,4 +1,4 @@
-class Megaleech
+module Megaleech
   class GoogleReader
     class FeedEntry
       attr_reader :data
