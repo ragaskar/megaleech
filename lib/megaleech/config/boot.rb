@@ -39,6 +39,14 @@ module Megaleech
       Megaleech::META_PATH
     end
 
+    def proxy_url
+      @config.proxy_url
+    end
+
+    def proxy_port
+      @config.proxy_port
+    end
+
     def processor_class_name(source)
       @classes[source] ||= if class_name = @config.processor_class_name(source)
         Kernel.const_get(class_name)

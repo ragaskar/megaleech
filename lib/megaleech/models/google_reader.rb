@@ -6,10 +6,7 @@ module Megaleech
     require 'cgi'
     require 'nokogiri'
 
-    GOOGLE_URL = 'http://www.google.com'
-    LOGIN_URL = 'https://www.google.com/accounts/ClientLogin'
-    READER_URL = GOOGLE_URL + '/reader'
-    STARRED_URL = GOOGLE_URL + '/atom/user/-/state/com.google/starred'
+    GOOGLE_URL = 'www.google.com'
 
     def initialize(user, password)
       @user = user
@@ -20,9 +17,9 @@ module Megaleech
     def starred(count = 0)
       results = []
       continuation = ''
-      url = URI::HTTP.build({:host => "www.google.com",
+      url = URI::HTTP.build({:host => google_url,
                              :path => "/reader/atom/user/-/state/com.google/starred"})
-      connection = Net::HTTP.new(url.host, url.port)
+      connection = Net::HTTP.new(url.host, Megaleech.proxy_port || url.port)
       until results.length > count
         header = {"Authorization" => "GoogleLogin auth=#{auth}"}
         c_string = continuation.empty? ? '' : "?c=#{continuation}"
@@ -49,6 +46,10 @@ module Megaleech
 
     private
 
+    def google_url
+      Megaleech.proxy_url || GOOGLE_URL
+    end
+
     def auth
       return @auth unless @auth.nil?
       data = {'Email' => @user,
@@ -56,10 +57,10 @@ module Megaleech
               'service' => 'reader',
               "source" => "Megaleech"
       }
-      url = URI::HTTPS.build({:host => "www.google.com",
+      url = URI::HTTPS.build({:host => google_url,
                               :path => "/accounts/ClientLogin"})
-      connection = Net::HTTP.new(url.host, url.port)
-      connection.use_ssl = true
+      connection = Net::HTTP.new(url.host, Megaleech.proxy_port || url.port)
+      connection.use_ssl = true unless Megaleech.proxy_port
       response = connection.post(url.path, GoogleReader.to_query_string(data))
       data = parse_auth_vars(response.body)
       @auth = data['Auth']

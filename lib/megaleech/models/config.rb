@@ -5,6 +5,14 @@ module Megaleech
       @config = nil
     end
 
+    def proxy_url
+      config.params['proxy'] && config.params['proxy']['url']
+    end
+
+    def proxy_port
+      config.params['proxy'] && config.params['proxy']['port']
+    end
+
     def user
       config.params['google_reader']['user']
     end
