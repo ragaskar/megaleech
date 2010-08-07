@@ -14,14 +14,13 @@ describe Megaleech::GoogleReader do
       @sample_starred_response = fixture('sample_starred.xml')
     end
 
-    it 'should be able to retrieve starred items' do
+    it 'should retrieve all starred items' do
       mock_google_reader_starred(@auth, @sample_starred_response)
       reader = Megaleech::GoogleReader.new(@user, @password)
       reader.stub!(:auth => @auth)
       starred = reader.starred
-      starred.length.should == 2
-      starred.collect { |entry| entry.title }.should ==
-        ['Cops - 21x35 - Coast to Coast', 'Miami Social - 1x01 - Liar Liar (Indi)']
+      starred.length.should == 102
+      starred.collect { |entry| entry.title }.should include('Cops - 21x35 - Coast to Coast', 'Miami Social - 1x01 - Liar Liar (Indi)')
     end
 
 
@@ -40,7 +39,8 @@ describe Megaleech::GoogleReader do
 
       reader = Megaleech::GoogleReader.new(@user, @password)
       reader.stub!(:auth => @auth)
-      results = reader.starred(10)
+      results = reader.starred(:limit => 10)
+      #ha, limit is .. not really limited ;)
       results.length.should == 12
     end
 
@@ -58,8 +58,19 @@ describe Megaleech::GoogleReader do
 
       reader = Megaleech::GoogleReader.new(@user, @password)
       reader.stub!(:auth => @auth)
-      results = reader.starred(10)
+      results = reader.starred(:limit => 10)
       results.length.should == 6
+    end
+
+    it "if :newer_than is passed, it should only return items newer than the passed date" do
+      fake_http = mock(Net::HTTP)
+      fake_response = mock('response', :body=> @sample_starred_response)
+      fake_http.stub!(:get).and_return(fake_response)
+      Net::HTTP.stub(:new => fake_http)
+      reader = Megaleech::GoogleReader.new(@user, @password)
+      reader.stub!(:auth => @auth)
+      results = reader.starred(:newer_than => Time.parse("2010-08-05T15:21:39Z"))
+      results.collect(&:title).should == ["Cops - 21x35 - Coast to Coast"]
     end
   end
 end

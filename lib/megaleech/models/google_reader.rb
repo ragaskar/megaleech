@@ -14,23 +14,31 @@ module Megaleech
       @auth = nil
     end
 
-    def starred(count = 0)
+    def starred(options = {})
+      limit = options[:limit] || 100
+      newer_than = options[:newer_than]
+      too_old = false
       results = []
       continuation = ''
       url = URI::HTTP.build({:host => google_url,
                              :path => "/reader/atom/user/-/state/com.google/starred"})
       connection = Net::HTTP.new(url.host, Megaleech.proxy_port || url.port)
-      until results.length > count
+      until results.length > limit
         header = {"Authorization" => "GoogleLogin auth=#{auth}"}
         c_string = continuation.empty? ? '' : "?c=#{continuation}"
         response = connection.get(url.path + c_string, header)
         doc = Nokogiri::XML(response.body)
         if entries = doc.xpath("//xmlns:entry")
           entries.each do |entry|
-            results << FeedEntry.new(entry)
+            entry = FeedEntry.new(entry)
+            if (newer_than && entry.updated <= newer_than)
+              too_old = true
+            else
+              results << entry
+            end
           end
           continuation = doc.at_xpath('//gr:continuation').content
-          break if continuation.nil? || continuation.strip.empty?
+          break if too_old || continuation.nil? || continuation.strip.empty?
         end
       end
       results

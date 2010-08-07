@@ -1,14 +1,19 @@
 module Megaleech
   class TorrentsController
 
+    def initialize
+      @last_seen_time = nil
+    end
+
     def run
       Megaleech::Torrent.queued.each do |torrent|
         if Megaleech.rtorrent.has_completed_downloading?(torrent)
           torrent.update(:status => Megaleech::Torrent::SEEDING)
         end
       end
-      starred = Megaleech.google_reader.starred
+      starred = Megaleech.google_reader.starred(:newer_than => @last_seen_time)
       starred.each { |s| process_entry(s) }
+      @last_seen_time = starred.first.updated unless starred.empty?
     end
 
     private

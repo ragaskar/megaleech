@@ -23,38 +23,50 @@ describe Megaleech::TorrentsController do
     Megaleech::Torrent.delete
   end
 
-  it "#run should add new torrents to rtorrent with the correct path and save torrent records" do
-    @rtorrent.should_receive(:download_torrent).
-      with("#{@meta_path}/some_file.torrent", "#{@download_path}/tv/Cops/Season 21/").
-      and_return("some_info_hash1")
-    @rtorrent.should_receive(:download_torrent).
-      with("#{@meta_path}/some_file.torrent", "#{@download_path}/tv/Miami Social/Season 1/").
-      and_return("some_info_hash2")
-    @controller.run
-    Megaleech::Torrent.count.should == 2
-    cops_torrent = Megaleech::Torrent.filter(:info_hash => "some_info_hash1").first
-    cops_torrent.status.should == Megaleech::Torrent::QUEUED
-  end
+  describe "#run" do
 
-  it "#run should not attempt to queue existing torrents" do
-    @rtorrent.stub(:has_completed_downloading?).and_return(false)
-    torrent = queued_torrent
-    @rtorrent.should_not_receive(:download_torrent).
-      with("#{@meta_path}/some_file.torrent", "#{@download_path}/tv/Cops/Season 21/")
-    @rtorrent.should_receive(:download_torrent).
-      with("#{@meta_path}/some_file.torrent", "#{@download_path}/tv/Miami Social/Season 1/").
-      and_return("some_info_hash2")
-    Megaleech::Torrent.count.should == 1
-    @controller.run
-    Megaleech::Torrent.count.should == 2
-  end
+    it "should add new torrents to rtorrent with the correct path and save torrent records" do
+      @rtorrent.should_receive(:download_torrent).
+        with("#{@meta_path}/some_file.torrent", "#{@download_path}/tv/Cops/Season 21/").
+        and_return("some_info_hash1")
+      @rtorrent.should_receive(:download_torrent).
+        with("#{@meta_path}/some_file.torrent", "#{@download_path}/tv/Miami Social/Season 1/").
+        and_return("some_info_hash2")
+      @controller.run
+      Megaleech::Torrent.count.should == 2
+      cops_torrent = Megaleech::Torrent.filter(:info_hash => "some_info_hash1").first
+      cops_torrent.status.should == Megaleech::Torrent::QUEUED
+    end
 
-  it "#run should update the status of torrents that have finished downloading" do
-    torrent = queued_torrent
-    @rtorrent.stub(:download_torrent)
-    @rtorrent.should_receive(:has_completed_downloading?).with(torrent).and_return(true)
-    @controller.run
-    torrent.reload.status.should == Megaleech::Torrent::SEEDING
+    it "should not attempt to queue existing torrents" do
+      @rtorrent.stub(:has_completed_downloading?).and_return(false)
+      torrent = queued_torrent
+      @rtorrent.should_not_receive(:download_torrent).
+        with("#{@meta_path}/some_file.torrent", "#{@download_path}/tv/Cops/Season 21/")
+      @rtorrent.should_receive(:download_torrent).
+        with("#{@meta_path}/some_file.torrent", "#{@download_path}/tv/Miami Social/Season 1/").
+        and_return("some_info_hash2")
+      Megaleech::Torrent.count.should == 1
+      @controller.run
+      Megaleech::Torrent.count.should == 2
+    end
+
+    it "should update the status of torrents that have finished downloading" do
+      torrent = queued_torrent
+      @rtorrent.stub(:download_torrent)
+      @rtorrent.should_receive(:has_completed_downloading?).with(torrent).and_return(true)
+      @controller.run
+      torrent.reload.status.should == Megaleech::Torrent::SEEDING
+    end
+
+    it "should not add old entries" do
+      @controller.run
+      Megaleech::Torrent.delete
+      Megaleech::Torrent.count.should == 0
+      @rtorrent.should_not_receive(:download_torrent)      
+      @controller.run
+      Megaleech::Torrent.count.should == 0
+    end
   end
 
 end

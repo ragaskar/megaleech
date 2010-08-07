@@ -11,6 +11,10 @@ module Megaleech
         content(attribute(node("id"), "original-id"))
       end
 
+      def updated
+        Time.parse(content(node("updated")))
+      end
+
       def enclosure
         content(attribute(node("link", {:rel => "enclosure"}), "href"))
       end

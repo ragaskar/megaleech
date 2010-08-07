@@ -28,6 +28,10 @@ describe Megaleech::GoogleReader::FeedEntry do
     @feed_entry.title.should == "Cops - 21x35 - Coast to Coast"
   end
 
+  it "#updated should return updated time" do
+    @feed_entry.updated.should == Time.parse("2010-08-06T15:21:39Z")
+  end
+
   it "#summary should return summary" do
     @feed_entry.summary.should == "Show Name:Cops; Show Title: Coast to Coast; Season: 21; Episode: 35; Filename: cops.s21e35.hdtv.xvid-2hd.avi;"
   end
