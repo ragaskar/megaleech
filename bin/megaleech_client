@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 require 'daemons'
 require 'megaleech'
-p ARGV
+
 controller = Megaleech::TorrentsController.new
 Daemons.run_proc("megaleech") do
   loop do
-    controller.run
+    system "ssh -R #{Megaleech.client_port}:localhost:22 #{Megaleech.remote_user}@#{Megaleech.remote_host} \"megaleech_download\""
     sleep(300)
   end
 end

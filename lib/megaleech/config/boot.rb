@@ -47,6 +47,18 @@ module Megaleech
       @config.proxy_port
     end
 
+    def client_port
+      @config.client_port
+    end
+
+    def client_user
+      @config.client_user
+    end
+
+    def client_download_directory
+      @config.client_download_directory
+    end
+
     def processor_class_name(source)
       @classes[source] ||= if class_name = @config.processor_class_name(source)
         Kernel.const_get(class_name)
@@ -60,9 +72,11 @@ module Megaleech
         db.create_table :torrents do
           primary_key :id
           String :feed_id, :null => false
-          String :location, :text => true, :null => false
+          String :destination, :text => true, :null => false
           String :status, :null => false, :default => "queued"
           String :info_hash, :null => false
+          DateTime :updated_at, :null => false
+          DateTime :created_at, :null => false
         end
       end
     end

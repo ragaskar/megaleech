@@ -67,6 +67,17 @@ describe Megaleech::TorrentsController do
       @controller.run
       Megaleech::Torrent.count.should == 0
     end
+
+    describe "reaping" do
+      describe "should reap downloaded files" do
+        it "which have a ratio >= SEED_TO"
+        it "which have a date older than >= SEED_FOR"
+      end
+      describe "should not reap downloaded files" do
+        it "which do not have a ratio >= SEED_TO"
+        it "which do not have a date older than >= SEED_FOR"
+      end
+    end
   end
 
 end

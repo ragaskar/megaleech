@@ -5,8 +5,7 @@ describe TvTorrents do
   before(:each) do
     @entry = mock_entry
     @destination_path = "/some/path"
-    @download_destination_path = "/some/other/path"
-    @tv_torrents = TvTorrents.new(@entry, @destination_path, @download_destination_path)
+    @tv_torrents = TvTorrents.new(@entry, @destination_path)
   end
 
   describe "#download_torrent_file" do
@@ -24,7 +23,7 @@ describe TvTorrents do
 
   describe "#destination" do
     it "should return the correct destination path" do
-      @tv_torrents.destination.should == "/some/other/path/tv/Cops/Season 21/"
+      @tv_torrents.destination.should == "tv/Cops/Season 21/"
     end
   end
 end

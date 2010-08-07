@@ -15,5 +15,6 @@ require 'megaleech/models/google_reader'
 require 'megaleech/models/google_reader_feed_entry'
 
 require 'megaleech/controllers/torrents_controller'
+require 'megaleech/controllers/downloads_controller'
 
 require 'megaleech/contrib/processors/tv_torrents.rb'

@@ -55,8 +55,20 @@ end
 def queued_torrent
   Megaleech::Torrent.create(:feed_id => mock_entry.id,
                             :status => Megaleech::Torrent::QUEUED,
-                            :location => "some location",
+                            :destination => "some location",
                             :info_hash => "some hash")
+end
+
+class Mom
+  @@feed_id = 0
+  def self.torrent(options = {})
+    @@feed_id = @@feed_id + 1
+    options = {:feed_id => (@@feed_id),
+               :status => Megaleech::Torrent::QUEUED,
+               :destination => "/some/location",
+               :info_hash => "some hash #{@@feed_id}"}.merge(options)
+    Megaleech::Torrent.create(options)
+  end
 end
 
 def mock_entry

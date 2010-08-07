@@ -1,10 +1,9 @@
 class TvTorrents
   require 'mechanize'
 
-  def initialize(entry, torrent_file_download_path, torrent_download_path)
+  def initialize(entry, torrent_file_download_path)
     @entry = entry
     @torrent_file_download_path = torrent_file_download_path
-    @torrent_download_path = torrent_download_path
   end
 
   def download_torrent_file
@@ -12,7 +11,7 @@ class TvTorrents
   end
 
   def destination
-    File.join(@torrent_download_path, "tv/#{show_name}/Season #{show_season}/")
+    "tv/#{show_name}/Season #{show_season}/"
   end
 
   protected
