@@ -1,11 +1,17 @@
 #!/usr/bin/env ruby
 require 'daemons'
 require 'megaleech'
-p ARGV
-controller = Megaleech::TorrentsController.new
-Daemons.run_proc("megaleech") do
-  loop do
-    controller.run
-    sleep(300)
+if (ARGV && ARGV.first == "download")
+  controller = Megaleech::DownloadsController.new(:user => ENV["MEGALEECH_USER"],
+                                                  :port => ENV["MEGALEECH_PORT"],
+                                                  :destination => ENV["MEGALEECH_DESTINATION"])
+  controller.run
+else
+  controller = Megaleech::TorrentsController.new
+  Daemons.run_proc("megaleech") do
+    loop do
+      controller.run
+      sleep(300)
+    end
   end
 end
