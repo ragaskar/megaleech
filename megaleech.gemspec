@@ -12,13 +12,12 @@ Gem::Specification.new do |s|
   s.date = %q{2010-08-08}
   s.description = %q{Megaleech uses your Google Reader account to automatically add starred torrents to Rtorrent}
   s.email = %q{ragaskar@gmail.com}
-  s.executables = ["megaleech_client", "megaleech_download", "megaleech_server"]
+  s.executables = ["megaleech_client", "megaleech_server"]
   s.extra_rdoc_files = [
     "README"
   ]
   s.files = [
     "bin/megaleech_client",
-     "bin/megaleech_download",
      "bin/megaleech_server",
      "lib/megaleech.rb",
      "lib/megaleech/config/.megaleech.rc",
