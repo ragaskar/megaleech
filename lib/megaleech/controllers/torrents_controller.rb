@@ -7,7 +7,7 @@ module Megaleech
 
     def run
       Megaleech::Torrent.queued.each do |torrent|
-        if Megaleech.rtorrent.has_completed_downloading?(torrent)
+        if Megaleech.rtorrent.has_completed_downloading?(torrent.info_hash)
           torrent.update(:status => Megaleech::Torrent::SEEDING)
         end
       end
@@ -28,7 +28,8 @@ module Megaleech
         Megaleech::Torrent.create(:feed_id => feed_entry.id,
                                   :destination => processor.destination,
                                   :status => Megaleech::Torrent::QUEUED,
-                                  :info_hash => info_hash)
+                                  :info_hash => info_hash,
+                                  :filename => Megaleech.rtorrent.filename_for(info_hash))
       rescue StandardError => e
         File.open(Megaleech.log_path, "a") { |f|
           f.write("Failed to process #{feed_entry.title}\n")

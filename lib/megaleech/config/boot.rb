@@ -75,6 +75,7 @@ module Megaleech
           String :destination, :text => true, :null => false
           String :status, :null => false, :default => "queued"
           String :info_hash, :null => false
+          String :filename, :null => false
           DateTime :updated_at, :null => false
           DateTime :created_at, :null => false
         end

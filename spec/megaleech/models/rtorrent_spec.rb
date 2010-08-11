@@ -24,15 +24,23 @@ describe Megaleech::Rtorrent do
 
   describe "#completed_downloading" do
     it "should return true if the passed torrent has completed downloading" do
-      torrent = queued_torrent
+      torrent = Mom.torrent
       @server.should_receive(:call).with("download_list", "complete").and_return([torrent.info_hash])
-      @rtorrent.has_completed_downloading?(torrent).should == true
+      @rtorrent.has_completed_downloading?(torrent.info_hash).should == true
       end
 
     it "should return false if the passed torrent has completed downloading" do
-      torrent = queued_torrent
+      torrent = Mom.torrent
       @server.should_receive(:call).with("download_list", "complete").and_return([])
-      @rtorrent.has_completed_downloading?(torrent).should == false
+      @rtorrent.has_completed_downloading?(torrent.info_hash).should == false
+    end
+  end
+
+  describe "#filename_for" do
+    it "should return the filename" do
+      torrent = Mom.torrent
+      @server.should_receive(:call).with("d.get_base_filename", torrent.info_hash).and_return("filename")
+      @rtorrent.filename_for(torrent.info_hash).should == "filename"
     end
   end
 end

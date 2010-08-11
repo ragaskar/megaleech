@@ -15,10 +15,17 @@ describe Megaleech::Torrent do
     end
   end
 
-  describe "#destination" do
+  describe "#destination=" do
     it "should remove illegal characters from the destination" do
       torrent = Megaleech::Torrent.new(:destination => "  Some Badly    Escaped: ? ! # ~ ( Filename ) ")
       torrent.destination.should == "Some Badly Escaped ( Filename )"
+    end
+  end
+
+  describe "#info_hash=" do
+    it "should uppercase values" do
+      torrent = Megaleech::Torrent.new(:info_hash => "lowercase")
+      torrent.info_hash.should == "LOWERCASE"
     end
   end
 

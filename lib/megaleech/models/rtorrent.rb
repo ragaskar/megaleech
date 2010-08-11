@@ -18,8 +18,12 @@ module Megaleech
       info_hash
     end
 
-    def has_completed_downloading?(torrent)
-      server.call("download_list", "complete").include?(torrent.info_hash)
+    def has_completed_downloading?(info_hash)
+      server.call("download_list", "complete").include?(info_hash)
+    end
+
+    def filename_for(info_hash)
+      server.call("d.get_base_filename", info_hash)
     end
 
     private

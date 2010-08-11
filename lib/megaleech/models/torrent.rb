@@ -22,6 +22,13 @@ module Megaleech
     alias_method "set_destination_without_safe_escape", "destination="
     alias_method "destination=", "set_destination_with_safe_escape"
 
+    def set_info_hash_with_proper_case(str)
+      set_info_hash_without_proper_case(str.upcase)
+    end
+
+    alias_method "set_info_hash_without_proper_case", "info_hash="
+    alias_method "info_hash=", "set_info_hash_with_proper_case"
+
     class << self
       def next_download
         seeding.order(:updated_at).first

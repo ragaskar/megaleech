@@ -9,16 +9,16 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rajan Agaskar"]
-  s.date = %q{2010-08-08}
+  s.date = %q{2010-08-10}
+  s.default_executable = %q{megaleech_server}
   s.description = %q{Megaleech uses your Google Reader account to automatically add starred torrents to Rtorrent}
   s.email = %q{ragaskar@gmail.com}
-  s.executables = ["megaleech_client", "megaleech_server"]
+  s.executables = ["megaleech_server"]
   s.extra_rdoc_files = [
     "README"
   ]
   s.files = [
-    "bin/megaleech_client",
-     "bin/megaleech_server",
+    "bin/megaleech_server",
      "lib/megaleech.rb",
      "lib/megaleech/config/.megaleech.rc",
      "lib/megaleech/config/boot.rb",
@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
      "lib/megaleech/contrib/rtorrent-scripts/scgi.rb",
      "lib/megaleech/controllers/downloads_controller.rb",
      "lib/megaleech/controllers/torrents_controller.rb",
+     "lib/megaleech/helpers/files_helper.rb",
      "lib/megaleech/models/config.rb",
      "lib/megaleech/models/google_reader.rb",
      "lib/megaleech/models/google_reader_feed_entry.rb",

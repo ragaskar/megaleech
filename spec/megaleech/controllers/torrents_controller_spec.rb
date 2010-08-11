@@ -7,6 +7,9 @@ describe Megaleech::TorrentsController do
     mock_google_reader('username', 'password', starred_response)
     @controller = Megaleech::TorrentsController.new
     @rtorrent = Megaleech::Rtorrent.new("some_socket_path")
+    @rtorrent.stub(:filename_for).and_return do |info_hash|
+      "#{info_hash}-filename"
+    end
     Megaleech.stub(:rtorrent).and_return(@rtorrent)
     @download_path = "/some/download/path"
     @meta_path = "/some/meta/path"
@@ -34,13 +37,13 @@ describe Megaleech::TorrentsController do
         and_return("some_info_hash2")
       @controller.run
       Megaleech::Torrent.count.should == 2
-      cops_torrent = Megaleech::Torrent.filter(:info_hash => "some_info_hash1").first
+      cops_torrent = Megaleech::Torrent.filter(:info_hash => "SOME_INFO_HASH1").first
       cops_torrent.status.should == Megaleech::Torrent::QUEUED
     end
 
     it "should not attempt to queue existing torrents" do
       @rtorrent.stub(:has_completed_downloading?).and_return(false)
-      torrent = queued_torrent
+      torrent = Mom.torrent(:status => "any status", :feed_id => mock_entry.id)
       @rtorrent.should_not_receive(:download_torrent).
         with("#{@meta_path}/some_file.torrent", "#{@download_path}/tv/Cops/Season 21/")
       @rtorrent.should_receive(:download_torrent).
@@ -52,9 +55,9 @@ describe Megaleech::TorrentsController do
     end
 
     it "should update the status of torrents that have finished downloading" do
-      torrent = queued_torrent
+      torrent = Mom.torrent
       @rtorrent.stub(:download_torrent)
-      @rtorrent.should_receive(:has_completed_downloading?).with(torrent).and_return(true)
+      @rtorrent.should_receive(:has_completed_downloading?).with(torrent.info_hash).and_return(true)
       @controller.run
       torrent.reload.status.should == Megaleech::Torrent::SEEDING
     end
