@@ -24,6 +24,7 @@ describe Megaleech::TorrentsController do
     mechanize.stub!(:get).and_return(mock_mechanize_response)
 
     Megaleech::Torrent.delete
+    @controller.stub(:puts)
   end
 
   describe "#run" do
@@ -60,15 +61,6 @@ describe Megaleech::TorrentsController do
       @rtorrent.should_receive(:has_completed_downloading?).with(torrent.info_hash).and_return(true)
       @controller.run
       torrent.reload.status.should == Megaleech::Torrent::SEEDING
-    end
-
-    it "should not add old entries" do
-      @controller.run
-      Megaleech::Torrent.delete
-      Megaleech::Torrent.count.should == 0
-      @rtorrent.should_not_receive(:download_torrent)      
-      @controller.run
-      Megaleech::Torrent.count.should == 0
     end
 
     describe "reaping" do

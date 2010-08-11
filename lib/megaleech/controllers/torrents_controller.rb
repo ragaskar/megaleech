@@ -6,14 +6,15 @@ module Megaleech
     end
 
     def run
+      puts Time.now
       Megaleech::Torrent.queued.each do |torrent|
         if Megaleech.rtorrent.has_completed_downloading?(torrent.info_hash)
+          puts "Now Seeding #{torrent.filename}"
           torrent.update(:status => Megaleech::Torrent::SEEDING)
         end
       end
-      starred = Megaleech.google_reader.starred(:newer_than => @last_seen_time)
+      starred = Megaleech.google_reader.starred(:limit => 50)
       starred.each { |s| process_entry(s) }
-      @last_seen_time = starred.first.updated unless starred.empty?
     end
 
     private
@@ -22,6 +23,7 @@ module Megaleech
       begin
         return if Megaleech::Torrent.filter(:feed_id => feed_entry.id).count > 0
         return unless klass = Megaleech.processor_class_name(feed_entry.source)
+        puts "Adding #{feed_entry.title}"
         processor = klass.new(feed_entry, Megaleech.meta_path)
         torrent_filepath = processor.download_torrent_file
         info_hash = Megaleech.rtorrent.download_torrent(torrent_filepath, File.join(Megaleech.download_directory, processor.destination))
