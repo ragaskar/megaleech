@@ -20,3 +20,4 @@ require 'megaleech/controllers/torrents_controller'
 require 'megaleech/controllers/downloads_controller'
 
 require 'megaleech/contrib/processors/tv_torrents.rb'
+require 'megaleech/contrib/processors/b_t_n.rb'

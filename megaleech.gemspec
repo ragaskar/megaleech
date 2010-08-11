@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rajan Agaskar"]
-  s.date = %q{2010-08-10}
+  s.date = %q{2010-08-11}
   s.default_executable = %q{megaleech_server}
   s.description = %q{Megaleech uses your Google Reader account to automatically add starred torrents to Rtorrent}
   s.email = %q{ragaskar@gmail.com}
@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
      "lib/megaleech/config/.megaleech.rc",
      "lib/megaleech/config/boot.rb",
      "lib/megaleech/contrib/parseconfig/parseconfig.rb",
+     "lib/megaleech/contrib/processors/b_t_n.rb",
      "lib/megaleech/contrib/processors/tv_torrents.rb",
      "lib/megaleech/contrib/rtorrent-scripts/SCGIxml.rb",
      "lib/megaleech/contrib/rtorrent-scripts/helpMethod.rb",
@@ -43,7 +44,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Megaleech uses your Google Reader account to automatically add starred torrents to Rtorrent}
   s.test_files = [
-    "spec/megaleech/contrib/processors/tv_torrents_spec.rb",
+    "spec/megaleech/contrib/processors/b_t_n_spec.rb",
+     "spec/megaleech/contrib/processors/tv_torrents_spec.rb",
      "spec/megaleech/controllers/downloads_controller_spec.rb",
      "spec/megaleech/controllers/torrents_controller_spec.rb",
      "spec/megaleech/models/config_spec.rb",

@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<feed xmlns:idx="urn:atom-extension:indexing" xmlns:media="http://search.yahoo.com/mrss/"
+      xmlns:gr="http://www.google.com/schemas/reader/atom/" xmlns="http://www.w3.org/2005/Atom" idx:index="no"
+      gr:dir="ltr"><!--
+Content-type: Preventing XSRF in IE.
+
+-->
+  <generator uri="http://www.google.com/reader">Google Reader</generator>
+  <id>tag:google.com,2005:reader/user/05713655046510434420/state/com.google/starred</id>
+  <title>The Exalted's starred items in Google Reader</title>
+  <gr:continuation>CPqr1Pemq6MC</gr:continuation>
+  <link rel="self" href="http://www.google.com/reader/atom/user/-/state/com.google/starred"/>
+  <author>
+    <name>The Exalted</name>
+  </author>
+  <updated>2010-08-11T11:36:38Z</updated>
+  <entry gr:crawl-timestamp-msec="1281526598231">
+    <id
+      gr:original-id="http://btn/torrents.php?action=download&amp;authkey=ffdfef9b5109cfd6451adafcaac804d0&amp;torrent_pass=qrna6bbh1pgw1co4bwspxnyjzkgwt45x&amp;id=31613">
+      tag:google.com,2005:reader/item/b12a14c0588eb7a8
+    </id>
+    <category term="user/05713655046510434420/state/com.google/read" scheme="http://www.google.com/reader/"
+              label="read"/>
+    <category term="user/05713655046510434420/state/com.google/starred" scheme="http://www.google.com/reader/"
+              label="starred"/>
+    <category term="user/05713655046510434420/state/com.google/fresh" scheme="http://www.google.com/reader/"
+              label="fresh"/>
+    <title type="html">America's Got Talent - S05E21 [ 2010 ] [ AVI | XViD | HDTV | SD | Scene ] [ Uploader: KoolKiller
+      ] [ Americas.Got.Talent.S05E21.HDTV.XviD-FQM ]
+    </title>
+    <published>2010-08-11T09:29:00Z</published>
+    <updated>2010-08-11T09:29:00Z</updated>
+    <link rel="alternate"
+          href="http://btn/torrents.php?action=download&amp;authkey=ffdfef9b5109cfd6451adafcaac804d0&amp;torrent_pass=qrna6bbh1pgw1co4bwspxnyjzkgwt45x&amp;id=31613"
+          type="text/html"/>
+    <summary xml:base="http://btn/" type="html">Episode Name: TBA
+      Season: 5
+      Episode: 21
+      Aired: 2010-08-10
+
+      Episode Overview:
+    </summary>
+    <author>
+      <name>KoolKiller</name>
+    </author>
+    <source
+      gr:stream-id="feed/http://btn/feeds.php?feed=torrents_all&amp;user=1267&amp;auth=cbb6d7c8c04e24e389b3185504ab0c2f&amp;passkey=qrna6bbh1pgw1co4bwspxnyjzkgwt45x&amp;authkey=ffdfef9b5109cfd6451adafcaac804d0">
+      <id>tag:google.com,2005:reader/feed/http://btn/feeds.php?feed=torrents_all&amp;user=1267&amp;auth=cbb6d7c8c04e24e389b3185504ab0c2f&amp;passkey=qrna6bbh1pgw1co4bwspxnyjzkgwt45x&amp;authkey=ffdfef9b5109cfd6451adafcaac804d0</id>
+      <title type="html">btn</title>
+      <link rel="alternate" href="http://btn/" type="text/html"/>
+    </source>
+  </entry>
+  <entry gr:crawl-timestamp-msec="1281526553762">
+    <id
+      gr:original-id="http://btn/torrents.php?action=download&amp;authkey=deadbeef&amp;torrent_pass=somepass&amp;id=31615">
+      tag:google.com,2005:reader/item/1ba2c32614abe5af
+    </id>
+    <category term="user/05713655046510434420/state/com.google/read" scheme="http://www.google.com/reader/"
+              label="read"/>
+    <category term="user/05713655046510434420/state/com.google/starred" scheme="http://www.google.com/reader/"
+              label="starred"/>
+    <category term="user/05713655046510434420/state/com.google/fresh" scheme="http://www.google.com/reader/"
+              label="fresh"/>
+    <title type="html">Jimmy Kimmel Live - S08E114 [ 2010 ] [ AVI | XViD | HDTV | SD | Scene | FastTorrent ] [ Uploader:
+      KoolKiller ] [ Jimmy.Kimmel.2010.08.10.Gordon.Ramsay.HDTV.XviD-2HD ]
+    </title>
+    <published>2010-08-11T10:02:21Z</published>
+    <updated>2010-08-11T10:02:21Z</updated>
+    <link rel="alternate"
+          href="http://btn/torrents.php?action=download&amp;authkey=deadbeef&amp;torrent_pass=somepass&amp;id=31615"
+          type="text/html"/>
+    <summary xml:base="http://btn/" type="html">Episode Name: Sofia Vergara, Gordon Ramsay, Christian Scott
+      Season: 8
+      Episode: 114
+      Aired: 2010-08-10
+
+      Episode Overview:
+    </summary>
+    <author>
+      <name>KoolKiller</name>
+    </author>
+    <source
+      gr:stream-id="feed/http://btn/feeds.php?feed=torrents_all&amp;user=1267&amp;auth=someauth&amp;passkey=somepass&amp;authkey=deadbeef">
+      <id>tag:google.com,2005:reader/feed/http://btn/feeds.php?feed=torrents_all&amp;user=1267&amp;auth=someauth&amp;passkey=somepass&amp;authkey=deadbeef</id>
+      <title type="html">btn</title>
+      <link rel="alternate" href="http://btn/" type="text/html"/>
+    </source>
+  </entry>
+</feed>
