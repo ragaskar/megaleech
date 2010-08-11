@@ -14,4 +14,12 @@ describe Megaleech::Torrent do
       Megaleech::Torrent.next_download.should == torrent_2
     end
   end
+
+  describe "#destination" do
+    it "should remove illegal characters from the destination" do
+      torrent = Megaleech::Torrent.new(:destination => "  Some Badly    Escaped: ? ! # ~ ( Filename ) ")
+      torrent.destination.should == "Some Badly Escaped ( Filename )"
+    end
+  end
+
 end

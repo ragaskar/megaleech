@@ -14,6 +14,8 @@ require 'megaleech/models/rtorrent'
 require 'megaleech/models/google_reader'
 require 'megaleech/models/google_reader_feed_entry'
 
+require 'megaleech/helpers/files_helper'
+
 require 'megaleech/controllers/torrents_controller'
 require 'megaleech/controllers/downloads_controller'
 

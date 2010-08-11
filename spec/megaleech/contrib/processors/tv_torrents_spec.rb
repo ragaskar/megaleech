@@ -23,7 +23,7 @@ describe TvTorrents do
 
   describe "#destination" do
     it "should return the correct destination path" do
-      @tv_torrents.destination.should == "tv/Cops/Season 21/"
+      @tv_torrents.destination.should == "tv/Cops: (Indi)/Season 21/"
     end
   end
 end

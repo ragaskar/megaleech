@@ -5,18 +5,18 @@ describe Megaleech::DownloadsController do
     before(:each) do
       Megaleech.stub!(:download_directory).and_return("/some/dl/dir")
       Megaleech::Torrent.delete
-      @torrent = Mom.torrent(:status => Megaleech::Torrent::SEEDING)
+      @torrent = Mom.torrent(:status => Megaleech::Torrent::SEEDING, :destination => "Show (Indi)/Season 1")
       @source = File.join(Megaleech.download_directory, @torrent.destination)
-      @root_dest = "/root/dir/"
-      @destination = File.join(@root_dest, @torrent.destination)
+      @root_dest = "/root/(My) Television/"
       @user = "some_user"
       @port = 1234
       @controller = Megaleech::DownloadsController.new(:port => @port, :user => @user, :destination => @root_dest)
+      @controller.stub(:puts)
     end
 
     it "should mark Torrent.next_download as downloading, then mark it finished once it reverse rsyncs it" do
-      @controller.should_receive(:system).with("ssh -p 1234 some_user@localhost \"mkdir -p \\\"#{@destination}\\\"\"").and_return(true)
-      @controller.should_receive(:system).with("rsync -r --bwlimit 3000 --partial --rsh=\"ssh -p #{@port}\" \"#{@source}\" \"#{@user}@localhost:#{@destination}\"").and_return(true)
+      @controller.should_receive(:system).with("ssh -p 1234 some_user@localhost \"mkdir -p \\\"/root/\\(My\\) Television/Show \\(Indi\\)/Season 1\\\"\"").and_return(true)
+      @controller.should_receive(:system).with("rsync -r --progress --partial --bwlimit 3000 --rsh=\"ssh -p #{@port}\" \"#{@source}\" \"#{@user}@localhost:/root/\\(My\\)\\ Television/Show\\ \\(Indi\\)/Season\\ 1\"").and_return(true)
       @controller.run
       @torrent.reload.status.should == Megaleech::Torrent::FINISHED
     end
@@ -27,10 +27,10 @@ describe Megaleech::DownloadsController do
     end
 
     it "should not mark as finished if rsync errors" do
-      @controller.should_receive(:system).with("ssh -p 1234 some_user@localhost \"mkdir -p \\\"#{@destination}\\\"\"").and_return(true)
-      @controller.should_receive(:system).with("rsync -r --bwlimit 3000 --partial --rsh=\"ssh -p #{@port}\" \"#{@source}\" \"#{@user}@localhost:#{@destination}\"").and_return(false)
+      @controller.should_receive(:system).with("ssh -p 1234 some_user@localhost \"mkdir -p \\\"/root/\\(My\\) Television/Show \\(Indi\\)/Season 1\\\"\"").and_return(true)
+      @controller.should_receive(:system).with("rsync -r --progress --partial --bwlimit 3000 --rsh=\"ssh -p #{@port}\" \"#{@source}\" \"#{@user}@localhost:/root/\\(My\\)\\ Television/Show\\ \\(Indi\\)/Season\\ 1\"").and_return(false)
       @controller.run
-      @torrent.reload.status.should_not == Megaleech::Torrent::FINISHED
+      @torrent.reload.status.should == Megaleech::Torrent::DOWNLOADING
     end
   end
 end

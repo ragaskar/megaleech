@@ -65,7 +65,7 @@ class Mom
     @@feed_id = @@feed_id + 1
     options = {:feed_id => (@@feed_id),
                :status => Megaleech::Torrent::QUEUED,
-               :destination => "/some/location",
+               :destination => "Crazy : Punctuation!*#~;/Season 1",
                :info_hash => "some hash #{@@feed_id}"}.merge(options)
     Megaleech::Torrent.create(options)
   end

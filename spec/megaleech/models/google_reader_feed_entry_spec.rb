@@ -33,7 +33,7 @@ describe Megaleech::GoogleReader::FeedEntry do
   end
 
   it "#summary should return summary" do
-    @feed_entry.summary.should == "Show Name:Cops; Show Title: Coast to Coast; Season: 21; Episode: 35; Filename: cops.s21e35.hdtv.xvid-2hd.avi;"
+    @feed_entry.summary.should == "Show Name:Cops: (Indi); Show Title: Coast to Coast; Season: 21; Episode: 35; Filename: cops.s21e35.hdtv.xvid-2hd.avi;"
   end
 
   it "should not blow up if the entry is missing elements" do
