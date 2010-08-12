@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<feed xmlns:idx="urn:atom-extension:indexing" xmlns:media="http://search.yahoo.com/mrss/"
+      xmlns:gr="http://www.google.com/schemas/reader/atom/" xmlns="http://www.w3.org/2005/Atom" idx:index="no"
+      gr:dir="ltr"><!--
+Content-type: Preventing XSRF in IE.
+
+-->
+  <generator uri="http://www.google.com/reader">Google Reader</generator>
+  <id>tag:google.com,2005:reader/user/05713655046510434420/state/com.google/starred</id>
+  <title>The Exalted's starred items in Google Reader</title>
+  <gr:continuation>CM3j4_yxrKMC</gr:continuation>
+  <link rel="self" href="http://www.google.com/reader/atom/user/-/state/com.google/starred"/>
+  <author>
+    <name>The Exalted</name>
+  </author>
+  <updated>2010-08-12T02:28:29Z</updated>
+  <entry gr:crawl-timestamp-msec="1281580109989">
+    <id gr:original-id="">tag:google.com,2005:reader/item/0fd01e637b9ed61d</id>
+    <category term="user/05713655046510434420/state/com.google/read" scheme="http://www.google.com/reader/"
+              label="read"/>
+    <category term="user/05713655046510434420/state/com.google/starred" scheme="http://www.google.com/reader/"
+              label="starred"/>
+    <category term="user/05713655046510434420/state/com.google/fresh" scheme="http://www.google.com/reader/"
+              label="fresh"/>
+    <title type="html">Jail.S03E07.PDTV.XviD-YesTV</title>
+    <published>2010-08-12T02:28:29Z</published>
+    <updated>2010-08-12T02:28:29Z</updated>
+    <link rel="alternate"
+          href="http://ptm/download.php/171574/some_auth_key/Jail.S03E07.PDTV.XviD-YesTV.torrent"
+          type="text/html"/>
+    <author gr:unknown-author="true">
+      <name>(author unknown)</name>
+    </author>
+    <source
+      gr:stream-id="feed/http://ptm/rss.php?cat%5B%5D=7&amp;tags=XviD&amp;key=some_auth_key&amp;ddl">
+      <id>tag:google.com,2005:reader/feed/http://ptm/rss.php?cat%5B%5D=7&amp;tags=XviD&amp;key=some_auth_key&amp;ddl</id>
+      <title type="html">ptm Feed</title>
+      <link rel="alternate" href="http://ptm/rss.php" type="text/html"/>
+    </source>
+  </entry>
+</feed>
