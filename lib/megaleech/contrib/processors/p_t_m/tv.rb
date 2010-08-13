@@ -1,7 +1,6 @@
 module Megaleech
   module PTM
     class PTM::Tv < PTM::Base
-      require 'mechanize'
 
       def destination
         "tv/#{show_name}/Season #{show_season}/"
