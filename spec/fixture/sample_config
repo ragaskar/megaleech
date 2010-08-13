@@ -7,6 +7,7 @@ download_root_path = "/home/user/torrents"
 socket_path = 'some_socket_path'
 [torrent_processors]
 TVTorrents.com = "TvTorrents"
+3f0e086cf4e3dfcbb54112d8f8f33c52 = "TvTorrents"
 [client]
 port = "1234"
 download_root_path = "/home/user/downloads"

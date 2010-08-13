@@ -84,7 +84,7 @@
       <id>
         tag:google.com,2005:reader/feed/http://www.tvtorrents.com/RssServlet?digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567
       </id>
-      <title type="html">TVTorrents.com</title>
+      <title type="html">SomeRandomTitle</title>
       <link rel="alternate" href="http://www.tvtorrents.com" type="text/html"/>
     </source>
   </entry>

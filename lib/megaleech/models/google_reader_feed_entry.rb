@@ -31,6 +31,15 @@ module Megaleech
         content(node("source/xmlns:title"))
       end
 
+      def source_link
+        content(attribute(node("source/xmlns:link"), "href"))
+      end
+
+      def source_id
+        content(node("source/xmlns:id"))
+      end
+
+
       private
 
       def content(node)

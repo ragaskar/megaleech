@@ -1,6 +1,5 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'spec_helper.rb'))
 
-
 describe Megaleech::GoogleReader::FeedEntry do
   before do
     doc =Nokogiri::XML(fixture('sample_starred.xml'))
@@ -14,6 +13,14 @@ describe Megaleech::GoogleReader::FeedEntry do
 
   it '#source should return source title' do
     @feed_entry.source.should == "TVTorrents.com"
+    end
+
+  it '#source_link should return source link' do
+    @feed_entry.source_link.should == "http://www.tvtorrents.com"
+  end
+
+  it '#source_id should return source id' do
+    @feed_entry.source_id.should == "tag:google.com,2005:reader/feed/http://www.tvtorrents.com/RssServlet?digest=abcdef0123467898abcdef0123467898abcdef012&hash=0123456789abcdef0123456789abcdef01234567"
   end
 
   it '#enclosure should return the enclosure link' do

@@ -43,7 +43,7 @@ def mock_google_reader_starred(sid, response)
 end
 
 def mock_parseconfig(path)
-  parseconfig = ParseConfig.new(fixture_path('sample_rtorrent_config'))
+  parseconfig = ParseConfig.new(fixture_path('sample_config'))
   ParseConfig.should_receive(:new).with(path).and_return(parseconfig)
 end
 

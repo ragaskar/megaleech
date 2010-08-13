@@ -16,4 +16,8 @@ describe Megaleech::Config do
   it "#processor should return the class name for the source processor" do
     @config.processor_class_name("TVTorrents.com").should == "TvTorrents"
   end
+
+  it "#processor should return the class name for the source processor" do
+    @config.processor_class_name("TVTorrents.com").should == "TvTorrents"
+  end
 end

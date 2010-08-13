@@ -1,5 +1,6 @@
 module Megaleech
   class Config
+    require "digest/md5"
     def initialize(path)
       @path = path
       @config = nil
@@ -42,7 +43,7 @@ module Megaleech
     end
 
     def processor_class_name(source)
-      config.params['torrent_processors'][source]
+      config.params['torrent_processors'][source] 
     end
 
     def download_directory

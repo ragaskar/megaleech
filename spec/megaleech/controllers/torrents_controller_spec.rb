@@ -10,6 +10,8 @@ describe Megaleech::TorrentsController do
     @rtorrent.stub(:filename_for).and_return do |info_hash|
       "#{info_hash}-filename"
     end
+    config = Megaleech::Config.new(fixture_path('sample_config'))
+    Megaleech.instance_variable_set(:@config, config)
     Megaleech.stub(:rtorrent).and_return(@rtorrent)
     @download_path = "/some/download/path"
     @meta_path = "/some/meta/path"
