@@ -1,13 +1,55 @@
-<?xml version="1.0"?> <feed xmlns:idx="urn:atom-extension:indexing" xmlns:gr="http://www.google.com/schemas/reader/atom/" xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom" idx:index="no"> <!--\nContent-type: Preventing XSRF in IE.\n\n--> <generator uri="http://www.google.com/reader">Google Reader</generator> <id>tag:google.com,2005:reader/user/05713655046510434420/state/com.google/starred</id> <title>The Exalted's starred items in Google Reader</title> <gr:continuation>CKy72pDxzZsC</gr:continuation> <link rel="self" href="http://www.google.com/reader/atom/user/-/state/com.google/starred"/> <author> <name>The Exalted</name> </author> <updated>2009-07-19T15:31:45Z</updated>
+<?xml version="1.0"?>
+<feed xmlns:idx="urn:atom-extension:indexing" xmlns:gr="http://www.google.com/schemas/reader/atom/"
+      xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom"
+      idx:index="no"> <!--\nContent-type: Preventing XSRF in IE.\n\n-->
+  <generator uri="http://www.google.com/reader">Google Reader</generator>
+  <id>tag:google.com,2005:reader/user/05713655046510434420/state/com.google/starred</id>
+  <title>The Exalted's starred items in Google Reader</title>
+  <gr:continuation>CKy72pDxzZsC</gr:continuation>
+  <link rel="self" href="http://www.google.com/reader/atom/user/-/state/com.google/starred"/>
+  <author>
+    <name>The Exalted</name>
+  </author>
+  <updated>2009-07-19T15:31:45Z</updated>
   <entry gr:crawl-timestamp-msec="1248017505312">
-    <id gr:original-id="http://torrent.tvtorrents.com/FetchTorrentServlet?info_hash=def0123456789abcdef0123456789abcdef0123&amp;digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567">tag:google.com,2005:reader/item/ee77feb21feccb87</id> <category term="user/05713655046510434420/state/com.google/read" scheme="http://www.google.com/reader/" label="read"/> <category term="user/05713655046510434420/state/com.google/starred" scheme="http://www.google.com/reader/" label="starred"/> <category term="user/05713655046510434420/state/com.google/fresh" scheme="http://www.google.com/reader/" label="fresh"/> <title type="html">Cops - 21x35 - Coast to Coast</title> <published>2009-07-19T02:39:30Z</published> <updated>2010-08-06T15:21:39Z</updated> <link rel="alternate" href="http://torrent.tvtorrents.com/FetchTorrentServlet?info_hash=def0123456789abcdef0123456789abcdef0123&amp;digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567" type="text/html"/> <link rel="enclosure" href="http://torrent.tvtorrents.com/FetchTorrentServlet?info_hash=def0123456789abcdef0123456789abcdef0123&amp;digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567" type="application/x-bittorrent" length="183604720"/> <summary xml:base="http://www.tvtorrents.com/" type="html">Show Name:Cops: (Indi); Show Title: Coast to Coast; Season: 21; Episode: 35; Filename: cops.s21e35.hdtv.xvid-2hd.avi;</summary> <author gr:unknown-author="true"> <name>(author unknown)</name> </author> <source gr:stream-id="feed/http://www.tvtorrents.com/RssServlet?digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567"> <id>
-    tag:google.com,2005:reader/feed/http://www.tvtorrents.com/RssServlet?digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567</id>
+    <id
+      gr:original-id="http://torrent.tvtorrents.com/FetchTorrentServlet?info_hash=def0123456789abcdef0123456789abcdef0123&amp;digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567">
+      tag:google.com,2005:reader/item/ee77feb21feccb87
+    </id>
+    <category term="user/05713655046510434420/state/com.google/read" scheme="http://www.google.com/reader/"
+              label="read"/>
+    <category term="user/05713655046510434420/state/com.google/starred" scheme="http://www.google.com/reader/"
+              label="starred"/>
+    <category term="user/05713655046510434420/state/com.google/fresh" scheme="http://www.google.com/reader/"
+              label="fresh"/>
+    <title type="html">Cops - 21x35 - Coast to Coast</title>
+    <published>2009-07-19T02:39:30Z</published>
+    <updated>2010-08-06T15:21:39Z</updated>
+    <link rel="alternate"
+          href="http://torrent.tvtorrents.com/FetchTorrentServlet?info_hash=alt_hash&amp;digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567"
+          type="text/html"/>
+    <link rel="enclosure"
+          href="http://torrent.tvtorrents.com/FetchTorrentServlet?info_hash=def0123456789abcdef0123456789abcdef0123&amp;digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567"
+          type="application/x-bittorrent" length="183604720"/>
+    <summary xml:base="http://www.tvtorrents.com/" type="html">Show Name:Cops: (Indi); Show Title: Coast to Coast; Season: 21; Episode: 35; Filename: cops.s21e35.hdtv.xvid-2hd.avi;
+    </summary>
+    <author gr:unknown-author="true">
+      <name>(author unknown)</name>
+    </author>
+    <source
+      gr:stream-id="feed/http://www.tvtorrents.com/RssServlet?digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567">
+      <id>
+        tag:google.com,2005:reader/feed/http://www.tvtorrents.com/RssServlet?digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567
+      </id>
       <title type="html">TVTorrents.com</title>
       <link rel="alternate" href="http://www.tvtorrents.com" type="text/html"/>
     </source>
   </entry>
   <entry gr:crawl-timestamp-msec="1248017497654">
-    <id gr:original-id="http://torrent.tvtorrents.com/FetchTorrentServlet?info_hash=f7b8600eea49ead9557a9fa9e2d3c7ca7dce41a0&amp;digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567">tag:google.com,2005:reader/item/1dfc36d441ffa6bd</id>
+    <id
+      gr:original-id="http://torrent.tvtorrents.com/FetchTorrentServlet?info_hash=f7b8600eea49ead9557a9fa9e2d3c7ca7dce41a0&amp;digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567">
+      tag:google.com,2005:reader/item/1dfc36d441ffa6bd
+    </id>
     <category term="user/05713655046510434420/state/com.google/read" scheme="http://www.google.com/reader/"
               label="read"/>
     <category term="user/05713655046510434420/state/com.google/starred" scheme="http://www.google.com/reader/"
@@ -23,14 +65,17 @@
     <link rel="enclosure"
           href="http://torrent.tvtorrents.com/FetchTorrentServlet?info_hash=f7b8600eea49ead9557a9fa9e2d3c7ca7dce41a0&amp;digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567"
           type="application/x-bittorrent" length="366688256"/>
-    <summary xml:base="http://www.tvtorrents.com/" type="html">Show Name:Miami Social; Show Title: Liar Liar (Indi); Season: 1; Episode: 01; Filename: Miami.Social.S01E01.HDTV.XViD.avi;
+    <summary xml:base="http://www.tvtorrents.com/" type="html">Show Name:Miami Social; Show Title: Liar Liar (Indi);
+      Season: 1; Episode: 01; Filename: Miami.Social.S01E01.HDTV.XViD.avi;
     </summary>
     <author gr:unknown-author="true">
       <name>(author unknown)</name>
     </author>
     <source
       gr:stream-id="feed/http://www.tvtorrents.com/RssServlet?digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567">
-      <id>tag:google.com,2005:reader/feed/http://www.tvtorrents.com/RssServlet?digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567</id>
+      <id>
+        tag:google.com,2005:reader/feed/http://www.tvtorrents.com/RssServlet?digest=abcdef0123467898abcdef0123467898abcdef012&amp;hash=0123456789abcdef0123456789abcdef01234567
+      </id>
       <title type="html">TVTorrents.com</title>
       <link rel="alternate" href="http://www.tvtorrents.com" type="text/html"/>
     </source>

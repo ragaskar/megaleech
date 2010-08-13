@@ -39,6 +39,10 @@ module Megaleech
         content(node("source/xmlns:id"))
       end
 
+      def alternate
+        content(attribute(node("link", {:rel => "alternate"}), "href"))        
+      end
+
 
       private
 

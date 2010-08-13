@@ -7,7 +7,7 @@ class BTN
   end
 
   def download_torrent_file
-    download(@entry.enclosure, @torrent_file_download_path)
+    download(@entry.alternate, @torrent_file_download_path)
   end
 
   def destination

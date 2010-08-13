@@ -16,7 +16,7 @@ describe PTM::Tv do
       mock_mechanize_response = mock("response")
       mock_mechanize_response.should_receive(:filename).and_return("some_file.torrent")
       mock_mechanize_response.should_receive(:save_as).with("#{@destination_path}/some_file.torrent")
-      mechanize.should_receive(:get).with(@entry.enclosure).and_return(mock_mechanize_response)
+      mechanize.should_receive(:get).with(@entry.alternate).and_return(mock_mechanize_response)
       result = @ptm.download_torrent_file
       result.should == "#{@destination_path}/some_file.torrent"
     end

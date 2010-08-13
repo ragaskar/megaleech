@@ -43,6 +43,10 @@ describe Megaleech::GoogleReader::FeedEntry do
     @feed_entry.summary.should == "Show Name:Cops: (Indi); Show Title: Coast to Coast; Season: 21; Episode: 35; Filename: cops.s21e35.hdtv.xvid-2hd.avi;"
   end
 
+  it "#alternate should return the main alternate link" do
+    @feed_entry.alternate.should == "http://torrent.tvtorrents.com/FetchTorrentServlet?info_hash=alt_hash&digest=abcdef0123467898abcdef0123467898abcdef012&hash=0123456789abcdef0123456789abcdef01234567"
+  end
+
   it "should not blow up if the entry is missing elements" do
     bad_xml = <<-badxml
 <feed xmlns:idx="urn:atom-extension:indexing" xmlns:gr="http://www.google.com/schemas/reader/atom/"
