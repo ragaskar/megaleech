@@ -13,7 +13,7 @@ describe Megaleech::GoogleReader::FeedEntry do
 
   it '#source should return source title' do
     @feed_entry.source.should == "TVTorrents.com"
-    end
+  end
 
   it '#source_link should return source link' do
     @feed_entry.source_link.should == "http://www.tvtorrents.com"
@@ -27,8 +27,17 @@ describe Megaleech::GoogleReader::FeedEntry do
     @feed_entry.enclosure.should == "http://torrent.tvtorrents.com/FetchTorrentServlet?info_hash=def0123456789abcdef0123456789abcdef0123&digest=abcdef0123467898abcdef0123467898abcdef012&hash=0123456789abcdef0123456789abcdef01234567"
   end
 
-  it "#id should return original id" do
-    @feed_entry.id.should == "http://torrent.tvtorrents.com/FetchTorrentServlet?info_hash=def0123456789abcdef0123456789abcdef0123&digest=abcdef0123467898abcdef0123467898abcdef012&hash=0123456789abcdef0123456789abcdef01234567"
+  describe "#id" do
+    it "#should return original id if it exists" do
+      @feed_entry.id.should == "http://torrent.tvtorrents.com/FetchTorrentServlet?info_hash=def0123456789abcdef0123456789abcdef0123&digest=abcdef0123467898abcdef0123467898abcdef012&hash=0123456789abcdef0123456789abcdef01234567"
+    end
+
+    it "#should use google id if id is missing" do
+      doc = Nokogiri::XML(fixture('sample_ptm.xml'))
+      entry_data = doc.at_xpath("//xmlns:entry")
+      feed_entry = Megaleech::GoogleReader::FeedEntry.new(entry_data)
+      feed_entry.id.should == "tag:google.com,2005:reader/item/0fd01e637b9ed61d"
+    end
   end
 
   it "#title should return title" do

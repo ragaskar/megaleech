@@ -8,7 +8,10 @@ module Megaleech
       end
 
       def id
-        content(attribute(node("id"), "original-id"))
+        id_node = node("id")
+        original_id = content(attribute(id_node, "original-id"))
+        return original_id if original_id && original_id.any?
+        content(id_node)
       end
 
       def updated
