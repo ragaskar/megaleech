@@ -1,12 +1,12 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..', '..', 'spec_helper.rb'))
 
-describe PTM::Tv do
+describe Megaleech::PTM::Tv do
 
   before(:each) do
     doc =Nokogiri::XML(fixture('sample_ptm.xml'))
     @entry = Megaleech::GoogleReader::FeedEntry.new(doc.at_xpath("//xmlns:entry"))
     @destination_path = "/some/path"
-    @ptm = PTM::Tv.new(@entry, @destination_path)
+    @ptm = Megaleech::PTM::Tv.new(@entry, @destination_path)
   end
 
   describe "#download_torrent_file" do

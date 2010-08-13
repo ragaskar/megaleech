@@ -47,7 +47,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Megaleech uses your Google Reader account to automatically add starred torrents to Rtorrent}
   s.test_files = [
-    "spec/megaleech/contrib/processors/b_t_n_spec.rb",
+    "spec/megaleech/config/boot_spec.rb",
+     "spec/megaleech/contrib/processors/b_t_n_spec.rb",
      "spec/megaleech/contrib/processors/p_t_m/tv_spec.rb",
      "spec/megaleech/contrib/processors/tv_torrents_spec.rb",
      "spec/megaleech/controllers/downloads_controller_spec.rb",

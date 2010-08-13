@@ -1,12 +1,12 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..', 'spec_helper.rb'))
 
-describe BTN do
+describe Megaleech::BTN do
 
   before(:each) do
     doc =Nokogiri::XML(fixture('sample_btn.xml'))
     @entry = Megaleech::GoogleReader::FeedEntry.new(doc.at_xpath("//xmlns:entry"))
     @destination_path = "/some/path"
-    @btn = BTN.new(@entry, @destination_path)
+    @btn = Megaleech::BTN.new(@entry, @destination_path)
   end
 
   describe "#download_torrent_file" do

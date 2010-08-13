@@ -5,12 +5,10 @@ module Megaleech
       Megaleech.const_set("META_PATH", File.expand_path(ENV['MEGALEECH_PATH'] || File.join(ENV['HOME'], ".megaleech")))
       Megaleech.const_set("LOG_PATH", File.join(meta_path, "megaleech.log"))
 
-      config_path = File.join(meta_path, ".megaleech.rc")
       if (!File.exists?(config_path))
         FileUtils.mkdir_p(meta_path)
         FileUtils.cp(File.join(lib_path, "/config/.megaleech.rc"), meta_path)
       end
-      @config = Megaleech::Config.new(config_path)
       @classes = {}
       db_init!
     end
@@ -24,7 +22,7 @@ module Megaleech
     end
 
     def download_directory
-      @config.download_directory
+      config.download_directory
     end
 
     def log_path
@@ -40,28 +38,41 @@ module Megaleech
     end
 
     def proxy_url
-      @config.proxy_url
+      config.proxy_url
     end
 
     def proxy_port
-      @config.proxy_port
+      config.proxy_port
     end
 
     def client_port
-      @config.client_port
+      config.client_port
     end
 
     def client_user
-      @config.client_user
+      config.client_user
     end
 
     def client_download_directory
-      @config.client_download_directory
+      config.client_download_directory
+    end
+
+    def config
+      @config ||= Megaleech::Config.new(config_path)
+    end
+
+    def config_path
+      File.join(meta_path, ".megaleech.rc")
     end
 
     def processor_class_name(source)
-      @classes[source] ||= if class_name = @config.processor_class_name(source)
-        Kernel.const_get(class_name)
+      @classes[source] ||= if class_name = config.processor_class_name(source)
+        class_parts = class_name.split("::")
+        result = nil
+        class_parts.each do |class_part|
+          result = (result || Megaleech).const_get(class_part)
+        end
+        result
       end
     end
 
@@ -83,13 +94,13 @@ module Megaleech
     end
 
     def new_rtorrent
-      path = @config.rtorrent_socket
+      path = config.rtorrent_socket
       raise "Rtorrent socket not found at #{path}" unless File.exists?(path)
       Megaleech::Rtorrent.new(path)
     end
 
     def new_google_reader
-      Megaleech::GoogleReader.new(@config.user, @config.password)
+      Megaleech::GoogleReader.new(config.user, config.password)
     end
 
   end

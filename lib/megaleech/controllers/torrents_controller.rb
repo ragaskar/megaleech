@@ -6,6 +6,7 @@ module Megaleech
     end
 
     def run
+      puts "\n\n"
       puts Time.now
       Megaleech::Torrent.queued.each do |torrent|
         if Megaleech.rtorrent.has_completed_downloading?(torrent.info_hash)

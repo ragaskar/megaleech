@@ -1,11 +1,11 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..', 'spec_helper.rb'))
 
-describe TvTorrents do
+describe Megaleech::TvTorrents do
 
   before(:each) do
     @entry = mock_entry
     @destination_path = "/some/path"
-    @tv_torrents = TvTorrents.new(@entry, @destination_path)
+    @tv_torrents = Megaleech::TvTorrents.new(@entry, @destination_path)
   end
 
   describe "#download_torrent_file" do
