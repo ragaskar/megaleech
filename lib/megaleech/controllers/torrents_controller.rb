@@ -22,7 +22,11 @@ module Megaleech
     def process_entry(feed_entry)
       begin
         return if Megaleech::Torrent.filter(:feed_id => feed_entry.id).count > 0
-        return unless klass = Megaleech.processor_class_name(feed_entry.source) || Megaleech.processor_class_name(feed_entry.source_hash)
+        klass = Megaleech.processor_class_name(feed_entry.source) || Megaleech.processor_class_name(feed_entry.source_hash)
+        unless klass
+          puts "No class found for #{feed_entry.title}, source is #{feed_entry.source}, hash is #{feed_entry.source_hash}, source id is #{feed_entry.source_id}"
+          return
+        end
         puts "Adding #{feed_entry.title}"
         processor = klass.new(feed_entry, Megaleech.meta_path)
         torrent_filepath = processor.download_torrent_file

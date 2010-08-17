@@ -40,7 +40,7 @@ module Megaleech
       end
 
       def source_hash
-        Digest::MD5.hexdigest(content(attribute(node("source/xmlns:link"), "href")))
+        Digest::MD5.hexdigest(source_id)
       end
 
       def source_id
