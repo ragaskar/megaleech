@@ -17,6 +17,10 @@ describe Megaleech::GoogleReader::FeedEntry do
 
   it '#source_link should return source link' do
     @feed_entry.source_link.should == "http://www.tvtorrents.com"
+    end
+
+  it '#source_hash should return hashed source link' do
+    @feed_entry.source_hash.should == Digest::MD5.hexdigest("http://www.tvtorrents.com")
   end
 
   it '#source_id should return source id' do

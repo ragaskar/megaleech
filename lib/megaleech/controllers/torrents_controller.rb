@@ -1,6 +1,5 @@
 module Megaleech
   class TorrentsController
-    require "digest/md5"
     def initialize
       @last_seen_time = nil
     end
@@ -23,7 +22,7 @@ module Megaleech
     def process_entry(feed_entry)
       begin
         return if Megaleech::Torrent.filter(:feed_id => feed_entry.id).count > 0
-        return unless klass = Megaleech.processor_class_name(feed_entry.source) || Megaleech.processor_class_name(Digest::MD5.hexdigest(feed_entry.source_id)) 
+        return unless klass = Megaleech.processor_class_name(feed_entry.source) || Megaleech.processor_class_name(feed_entry.source_hash)
         puts "Adding #{feed_entry.title}"
         processor = klass.new(feed_entry, Megaleech.meta_path)
         torrent_filepath = processor.download_torrent_file

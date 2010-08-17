@@ -1,6 +1,7 @@
 module Megaleech
   class GoogleReader
     class FeedEntry
+      require "digest/md5"
       attr_reader :data
 
       def initialize(entry_node)
@@ -36,6 +37,10 @@ module Megaleech
 
       def source_link
         content(attribute(node("source/xmlns:link"), "href"))
+      end
+
+      def source_hash
+        Digest::MD5.hexdigest(content(attribute(node("source/xmlns:link"), "href")))
       end
 
       def source_id
