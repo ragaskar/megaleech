@@ -26,5 +26,10 @@ describe Megaleech::BTN do
     it "should return the correct destination path" do
       @btn.destination.should == "tv/America's Got Talent/Season 5/"
     end
+
+    it "should default to season 0 when the summary is not standard" do
+      @entry.stub!(:summary).and_return("48.Hours.Mystery-Justice.in.the.Heartland.PDTV.XviD-YT")
+      @btn.destination.should == "tv/America's Got Talent/Season 0/"      
+    end
   end
 end

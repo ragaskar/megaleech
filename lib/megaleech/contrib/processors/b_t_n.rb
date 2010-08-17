@@ -22,7 +22,7 @@ module Megaleech
     end
 
     def show_season
-      @entry.summary[/Season:([^Episode]*)/, 1].strip
+      (@entry.summary[/Season:([^Episode]*)/, 1] || "0").strip
     end
 
     def download(source, save_path)
