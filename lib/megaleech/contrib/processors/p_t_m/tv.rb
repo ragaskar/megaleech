@@ -6,6 +6,10 @@ module Megaleech
         "tv/#{show_name}/Season #{show_season}/"
       end
 
+      def touch_path
+        "tv/#{show_name}"
+      end
+
       protected
 
       def show_name

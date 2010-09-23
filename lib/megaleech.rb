@@ -14,6 +14,7 @@ require 'megaleech/models/rtorrent'
 require 'megaleech/models/google_reader'
 require 'megaleech/models/google_reader_feed_entry'
 require 'megaleech/models/scene_tv_parser'
+require 'megaleech/models/processor'
 
 require 'megaleech/helpers/files_helper'
 

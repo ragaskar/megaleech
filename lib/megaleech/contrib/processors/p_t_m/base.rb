@@ -1,13 +1,6 @@
 module Megaleech
   module PTM
-    class Base
-      require 'mechanize'
-
-      def initialize(entry, torrent_file_download_path)
-        @entry = entry
-        @torrent_file_download_path = torrent_file_download_path
-      end
-
+    class Base < Megaleech::Processor
       def download_torrent_file
         download(@entry.alternate, @torrent_file_download_path)
       end

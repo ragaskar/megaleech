@@ -17,6 +17,7 @@ module Megaleech
       output_and_execute("ssh -p #{@port} #{@user}@localhost \"mkdir -p \\\"#{destination}\\\"\"")
       result = output_and_execute("rsync -r --progress --partial --bwlimit 3000 --rsh=\"ssh -p #{@port}\" \"#{source}\" #{@user}@localhost:\"#{escape_for_rsync(destination)}\"")
       if (result)
+        output_and_execute("ssh -p #{@port} #{@user}@localhost \"touch \\\"#{torrent.touch_path}\\\"\"") if torrent.touch_path
         torrent.status = Megaleech::Torrent::FINISHED
         torrent.save
       end

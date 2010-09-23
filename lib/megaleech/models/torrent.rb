@@ -4,8 +4,10 @@ module Megaleech
 
     class << self
       def samba_safe_path(str)
-        ILLEGAL_CHARACTERS.each { |c| str = str.gsub(c, "") }
+        return unless str
+        ILLEGAL_CHARACTERS.each { |c| str.gsub!(c, "") }
         str.squeeze(" ").strip
+
       end
 
       def next_download
@@ -18,7 +20,7 @@ module Megaleech
     DOWNLOADING = "downloading"
     FINISHED = "finished"
 
-    ILLEGAL_CHARACTERS = %w{: ? ! # ~ * ; [ ] | < > ,}
+    ILLEGAL_CHARACTERS = %w{  : ? ! # ~ * ; [ ] | < > ,  }
 
 
     subset(:queued, :status => QUEUED)
@@ -32,6 +34,13 @@ module Megaleech
 
     alias_method "set_destination_without_safe_escape", "destination="
     alias_method "destination=", "set_destination_with_safe_escape"
+
+    def set_touch_path_with_safe_escape(str)
+      set_touch_path_without_safe_escape(Megaleech::Torrent.samba_safe_path(str))
+    end
+
+    alias_method "set_touch_path_without_safe_escape", "touch_path="
+    alias_method "touch_path=", "set_touch_path_with_safe_escape"
 
     def set_info_hash_with_proper_case(str)
       set_info_hash_without_proper_case(str.upcase)

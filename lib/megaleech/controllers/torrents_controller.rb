@@ -13,8 +13,12 @@ module Megaleech
           torrent.update(:status => Megaleech::Torrent::SEEDING)
         end
       end
-      starred = Megaleech.google_reader.starred(:limit => 50)
-      starred.each { |s| process_entry(s) }
+      begin
+        starred = Megaleech.google_reader.starred(:limit => 50)
+        starred.each { |s| process_entry(s) }
+      rescue
+        puts "google connection error"
+      end
     end
 
     private
@@ -31,8 +35,16 @@ module Megaleech
         processor = klass.new(feed_entry, Megaleech.meta_path)
         torrent_filepath = processor.download_torrent_file
         info_hash = Megaleech.rtorrent.download_torrent(torrent_filepath, File.join(Megaleech.download_directory, Megaleech::Torrent.samba_safe_path(processor.destination)))
+
+        hash = {:feed_id => feed_entry.id,
+                :destination => processor.destination,
+                :touch_path => processor.touch_path,
+                :status => Megaleech::Torrent::QUEUED,
+                :info_hash => info_hash,
+                :filename => Megaleech.rtorrent.filename_for(info_hash)}
         Megaleech::Torrent.create(:feed_id => feed_entry.id,
                                   :destination => processor.destination,
+                                  :touch_path => processor.touch_path,
                                   :status => Megaleech::Torrent::QUEUED,
                                   :info_hash => info_hash,
                                   :filename => Megaleech.rtorrent.filename_for(info_hash))

@@ -84,6 +84,7 @@ module Megaleech
           primary_key :id
           String :feed_id, :null => false
           String :destination, :text => true, :null => false
+          String :touch_path, :text => true, :null => true, :default => nil
           String :status, :null => false, :default => "queued"
           String :info_hash, :null => false
           String :filename, :null => false
