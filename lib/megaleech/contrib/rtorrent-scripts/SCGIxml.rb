@@ -31,10 +31,13 @@ class SCGIWrappedSocket
 
     def read()
         data = @sock.read()
+        result = data.split("\r\n\r\n").last
+        # half-ass hack in i8 support
+        result = result.gsub("<i8>", "<string>").gsub("<\/i8>","</string>")
         # receiving an html response (very dumb parsing)
         # divided in 2
         # 1 -> status + headers
         # 2 -> data
-        return data.split("\r\n\r\n").last
+        return result
    end
 end

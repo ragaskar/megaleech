@@ -1,12 +1,25 @@
 module Megaleech
   require "sequel"
   class Torrent < Sequel::Model
+
+    class << self
+      def samba_safe_path(str)
+        ILLEGAL_CHARACTERS.each { |c| str = str.gsub(c, "") }
+        str.squeeze(" ").strip
+      end
+
+      def next_download
+        seeding.order(:updated_at).first
+      end
+    end
+
     QUEUED = "queued"
     SEEDING = "seeding"
     DOWNLOADING = "downloading"
     FINISHED = "finished"
 
-    ILLEGAL_CHARACTERS = [":", "?", "!", "#", "~", "*", ";"]
+    ILLEGAL_CHARACTERS = %w{: ? ! # ~ * ; [ ] | < > ,}
+
 
     subset(:queued, :status => QUEUED)
     subset(:seeding, :status => SEEDING)
@@ -14,9 +27,7 @@ module Megaleech
     subset(:finished, :status => FINISHED)
 
     def set_destination_with_safe_escape(str)
-      ILLEGAL_CHARACTERS.each { |c| str = str.gsub(c, "") }
-      str = str.squeeze(" ").strip
-      set_destination_without_safe_escape(str)
+      set_destination_without_safe_escape(Megaleech::Torrent.samba_safe_path(str))
     end
 
     alias_method "set_destination_without_safe_escape", "destination="
@@ -28,12 +39,6 @@ module Megaleech
 
     alias_method "set_info_hash_without_proper_case", "info_hash="
     alias_method "info_hash=", "set_info_hash_with_proper_case"
-
-    class << self
-      def next_download
-        seeding.order(:updated_at).first
-      end
-    end
 
 
     def before_create

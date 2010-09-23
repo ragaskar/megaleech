@@ -33,7 +33,7 @@ describe Megaleech::TorrentsController do
 
     it "should add new torrents to rtorrent with the correct path and save torrent records" do
       @rtorrent.should_receive(:download_torrent).
-        with("#{@meta_path}/some_file.torrent", "#{@download_path}/tv/Cops/Season 21/").
+        with("#{@meta_path}/some_file.torrent", "#{@download_path}/tv/Cops World's Dumbest Criminals/Season 21/").
         and_return("some_info_hash1")
       @rtorrent.should_receive(:download_torrent).
         with("#{@meta_path}/some_file.torrent", "#{@download_path}/tv/Miami Social/Season 1/").
@@ -48,7 +48,7 @@ describe Megaleech::TorrentsController do
       @rtorrent.stub(:has_completed_downloading?).and_return(false)
       torrent = Mom.torrent(:status => "any status", :feed_id => mock_entry.id)
       @rtorrent.should_not_receive(:download_torrent).
-        with("#{@meta_path}/some_file.torrent", "#{@download_path}/tv/Cops/Season 21/")
+        with("#{@meta_path}/some_file.torrent", "#{@download_path}/tv/Cops World's Dumbest Criminals/Season 21/")
       @rtorrent.should_receive(:download_torrent).
         with("#{@meta_path}/some_file.torrent", "#{@download_path}/tv/Miami Social/Season 1/").
         and_return("some_info_hash2")
@@ -67,7 +67,11 @@ describe Megaleech::TorrentsController do
 
     describe "reaping" do
       describe "should reap downloaded files" do
-        it "which have a ratio >= SEED_TO"
+        it "which have a ratio >= SEED_TO" do
+          pending
+          @rtorrent.should_receive(:ratio_for).and_return(2)
+          FileUtils.should_receive(:rm_rf)
+        end
         it "which have a date older than >= SEED_FOR"
       end
       describe "should not reap downloaded files" do

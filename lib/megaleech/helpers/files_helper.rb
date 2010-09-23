@@ -1,13 +1,9 @@
 module FilesHelper
-  FILESYSTEM_ESCAPABLE_CHARACTERS = ["(", ")"]
-  
-  def escape_for_filesystem(str)
-    FILESYSTEM_ESCAPABLE_CHARACTERS.each { |c| str = str.gsub(c, "\\#{c}") }
-    str
-  end
+  SLASH_ESCAPABLE_CHARACTERS = ["(", ")", " "]
 
   def escape_for_rsync(str)
-    escape_for_filesystem(str).gsub(" ", "\\ ")
+    SLASH_ESCAPABLE_CHARACTERS.each { |c| str = str.gsub(c, "\\#{c}") }
+    str.gsub("'", "\\\\'")
   end
 
   def output_and_execute(command)

@@ -30,7 +30,7 @@ module Megaleech
         puts "Adding #{feed_entry.title}"
         processor = klass.new(feed_entry, Megaleech.meta_path)
         torrent_filepath = processor.download_torrent_file
-        info_hash = Megaleech.rtorrent.download_torrent(torrent_filepath, File.join(Megaleech.download_directory, processor.destination))
+        info_hash = Megaleech.rtorrent.download_torrent(torrent_filepath, File.join(Megaleech.download_directory, Megaleech::Torrent.samba_safe_path(processor.destination)))
         Megaleech::Torrent.create(:feed_id => feed_entry.id,
                                   :destination => processor.destination,
                                   :status => Megaleech::Torrent::QUEUED,
