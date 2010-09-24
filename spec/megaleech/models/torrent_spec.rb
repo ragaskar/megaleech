@@ -22,6 +22,13 @@ describe Megaleech::Torrent do
     end
   end
 
+  describe "#touch_path=" do
+    it "should remove illegal characters from the touch_path" do
+      torrent = Megaleech::Torrent.new(:touch_path => "  Some Badly    Escaped: ? ! # ~ ( Filename ) ")
+      torrent.touch_path.should == "Some Badly Escaped ( Filename )"
+    end
+  end
+
   describe "#info_hash=" do
     it "should uppercase values" do
       torrent = Megaleech::Torrent.new(:info_hash => "lowercase")

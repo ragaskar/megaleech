@@ -54,6 +54,7 @@ describe Megaleech::TorrentsController do
         and_return("some_info_hash2")
       Megaleech::Torrent.count.should == 1
       @controller.run
+      
       Megaleech::Torrent.count.should == 2
     end
 

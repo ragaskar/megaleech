@@ -60,6 +60,7 @@ class Mom
                :status => Megaleech::Torrent::QUEUED,
                :destination => "Crazy : Punctuation!*#~;/Season 1",
                :info_hash => "some hash #{@@feed_id}",
+               :touch_path => nil, 
                :filename => "Filename #{@@feed_id}"}.merge(options)
     Megaleech::Torrent.create(options)
   end

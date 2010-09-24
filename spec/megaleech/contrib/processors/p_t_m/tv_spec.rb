@@ -27,4 +27,10 @@ describe Megaleech::PTM::Tv do
       @ptm.destination.should == "tv/In Jail/Season 3/"
     end
   end
+
+  describe "#touch_path" do
+    it "should return the correct touch path" do
+      @ptm.touch_path.should == "tv/In Jail"
+    end
+  end
 end

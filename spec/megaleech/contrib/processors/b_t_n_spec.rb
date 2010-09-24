@@ -32,4 +32,10 @@ describe Megaleech::BTN do
       @btn.destination.should == "tv/America's Got Talent/Season 0/"      
     end
   end
+
+  describe "#touch_path" do
+    it "should return the correct touch_path" do
+      @btn.touch_path.should == "tv/America's Got Talent"
+    end
+  end
 end

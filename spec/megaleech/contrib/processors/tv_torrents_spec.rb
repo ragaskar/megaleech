@@ -26,4 +26,12 @@ describe Megaleech::TvTorrents do
       @tv_torrents.destination.should == "tv/Cops: (Indi)/Season 21/"
     end
   end
+
+  describe "#touch_path" do
+    it "should return the correct touch path" do
+      @tv_torrents.touch_path.should == "tv/Cops: (Indi)"
+    end
+  end
+
+
 end
